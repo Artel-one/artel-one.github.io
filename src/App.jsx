@@ -38,7 +38,7 @@ function App() {
   const [isCookieConsentOpened, setIsCookieConsentOpened] = useState(!cookie(CONSENT_COOKIE_NAME))
 
   const agreeCookies = () => {
-    cookie.set(CONSENT_COOKIE_NAME, '1')
+    cookie.set(CONSENT_COOKIE_NAME, '1', { 'expires': 400 })
     setIsCookieConsentOpened(false)
   }
 
@@ -528,13 +528,13 @@ function App() {
                 <h2 className="mb-6 text-sm font-semibold text-white uppercase">Legal</h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-4">
-                    <a href="/docs/terms_and_conditions.docx" className="hover:underline">Terms and conditions</a>
+                    <a href="/docs/terms-and-conditions.pdf" className="hover:underline">Terms and Conditions</a>
                   </li>
                   <li className="mb-4">
-                    <a href="/docs/privacy_policy.docx" className="hover:underline">Privacy Policy</a>
+                    <a href="/docs/privacy-policy.pdf" className="hover:underline">Privacy Policy</a>
                   </li>
                   <li className="mb-4">
-                    <a href="/docs/cookie_policy.docx" className="hover:underline">Cookies Policy</a>
+                    <a href="/docs/cookie-policy.pdf" className="hover:underline">Cookies Policy</a>
                   </li>
                 </ul>
               </div>
