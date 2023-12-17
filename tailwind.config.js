@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        violet: '#6922EC'
+        prime: '#6922EC',
+        black: 'rgba(24, 24, 27, 1)',
+        'gray-purpure': 'rgba(112, 93, 142, 1)'
       },
       fontFamily: {
         'pj': '"Plus Jakarta Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;',

@@ -86,7 +86,7 @@ function App() {
               </div>
 
               <div className="lg:ml-auto lg:items-center lg:space-x-8 xl:space-x-10">
-                <a href="#" title="" onClick={openModal} className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-violet border border-transparent rounded-xl hover:opacity-90 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" role="button">
+                <a href="#" title="" onClick={openModal} className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-prime border border-transparent rounded-xl hover:opacity-90 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" role="button">
                   Request demo
                 </a>
               </div>
