@@ -400,7 +400,7 @@ function App() {
 
         <section className="pt-12 pb-12 sm:pb-8 lg:pt-8 bg-black">
           <div className="flex flex-col lg:flex-row justify-between px-4 py-11 container mx-auto sm:px-8 lg:px-10 gap-14 lg:gap-4 lg:max-w-7xl max-w-lg">
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col lg:w-1/3">
               <img className="w-14 pl-3" src={rocketIcon} alt="" />
               <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">Boosted profits</p>
               <p className="text-lg text-gray-300 mt-5">
@@ -409,14 +409,14 @@ function App() {
                 ROMI, ARPU and reduced CAC, Churn
               </p>
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col lg:w-1/3">
               <img className="w-14 pl-3" src={translatorIcon} alt="" />
               <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">ML-attribution</p>
               <p className="text-lg text-gray-300 mt-5">
                 Find out which marketing channel is most likely to lead to customer conversions
               </p>
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col lg:w-1/3">
               <img className="w-14 pl-3" src={diagramIcon} alt="" />
               <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">Predictive analytics</p>
               <p className="text-lg text-gray-300 mt-5">
@@ -425,7 +425,7 @@ function App() {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row justify-between px-4 py-11 container mx-auto sm:px-8 lg:px-10 gap-14 lg:gap-4 lg:max-w-7xl max-w-lg">
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col lg:w-1/3">
               <img className="w-14 pl-3" src={rocketIcon} alt="" />
               <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">Data personalisation</p>
               <p className="text-lg text-gray-300 mt-5">
@@ -434,14 +434,14 @@ function App() {
                 and behaviours
               </p>
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col lg:w-1/3">
               <img className="w-14 pl-3" src={translatorIcon} alt="" />
               <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">ML experiments</p>
               <p className="text-lg text-gray-300 mt-5">
                 Flexible system of iterative A/B tests <br className="hidden lg:block" />on HADI cycles for marketing activities
               </p>
             </div>
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col lg:w-1/3">
               <img className="w-14 pl-3" src={diagramIcon} alt="" />
               <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">End-to-end analytics</p>
               <p className="text-lg text-gray-300 mt-5">
