@@ -1,476 +1,93 @@
-import { useState, Fragment } from 'react'
-import './App.css'
-import logoImage from './assets/logo.svg'
-import logoWhiteImage from './assets/logo_white.svg'
-import rocketIcon from './assets/rocket.svg'
-import translatorIcon from './assets/translator.svg'
-import diagramIcon from './assets/diagram.svg'
-import dashboardImage from './assets/dashboard.png'
-import titleDecoration from './assets/title_decoration.png'
-import titleDecoration2 from './assets/title_decoration_2.png'
+import { useState } from "react";
+import "./App.css";
 import "@fontsource/plus-jakarta-sans"; // Defaults to weight 400
 import "@fontsource/plus-jakarta-sans/600.css";
 import "@fontsource/plus-jakarta-sans/700.css";
 import "@fontsource/plus-jakarta-sans/800.css";
-import { Dialog, Transition } from '@headlessui/react'
-import cookie from 'cookiejs'
-import CallToAction from "./components/CallToAction"
-import Feature from './components/Feature'
-import Feature2 from './components/Feature2'
-import Feature3 from './components/Feature3'
-import Feature4 from './components/Feature4'
-import Feature5 from './components/Feature5'
-import Feature6 from './components/Feature6'
-import Feedback from './components/Feedback'
-import HowWorks from './components/HowWorks'
-import Stats from './components/Stats'
-import Price2 from './components/Price2'
-import Footer from './components/Footer'
+import cookie from "cookiejs";
+import CallToAction from "./components/CallToAction";
+import Feature from "./components/Feature";
+import Feature2 from "./components/Feature2";
+import Feature3 from "./components/Feature3";
+import Feature4 from "./components/Feature4";
+import Feature5 from "./components/Feature5";
+import Feature6 from "./components/Feature6";
+import Feedback from "./components/Feedback";
+import HowWorks from "./components/HowWorks";
+import Stats from "./components/Stats";
+import Price2 from "./components/Price2";
+import * as React from "react";
+import Footer from "./components/Footer";
+import Presentation from "./components/Presentation";
+import RequestModal from "./components/RequestModal";
+import CookieConsent from "./components/CookieConsent";
+import _Feature1 from "./components/_Feature1";
+import _Feature2 from "./components/_Feature2";
+import _Feature3 from "./components/_Feature3";
+import _Feature4 from "./components/_Feature4";
+import _Results from "./components/_Results";
+import _Advantages from "./components/_Advantages";
+import _Cases from "./components/_Cases";
+import _HowItWorks from "./components/_HowItWorks";
+import _Dashboard from "./components/_Dashboard";
+import _Feedback from "./components/_Feedback";
+import _Price from "./components/_Price";
+import _Demo from "./components/_Demo";
+import _Footer from "./components/_Footer";
 
-const CONSENT_COOKIE_NAME = 'consent'
+const CONSENT_COOKIE_NAME = "consent";
 
 function App() {
-  const [isRequestFormOpen, setIsRequestFormOpen] = useState(false)
-  const [isSuccessSent, setIsSuccessSent] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  console.log(cookie(CONSENT_COOKIE_NAME))
+  const [isRequestFormOpen, setIsRequestFormOpen] = useState(false);
 
-  const [isCookieConsentOpened, setIsCookieConsentOpened] = useState(!cookie(CONSENT_COOKIE_NAME))
+  const [isCookieConsentOpened, setIsCookieConsentOpened] = useState(
+    !cookie(CONSENT_COOKIE_NAME),
+  );
 
   const agreeCookies = () => {
-    cookie.set(CONSENT_COOKIE_NAME, '1', { 'expires': 400 })
-    setIsCookieConsentOpened(false)
-  }
+    cookie.set(CONSENT_COOKIE_NAME, "1", { expires: 400 });
+    setIsCookieConsentOpened(false);
+  };
 
-  const openModal = () => {
-    setIsSuccessSent(false)
-    setIsRequestFormOpen(true)
-  }
+  const openRequestModal = () => {
+    // TODO: перенести
+    // setIsSuccessSent(false);
+    setIsRequestFormOpen(true);
+  };
 
-  const closeModal = () => {
-    setIsRequestFormOpen(false)
-  }
-
-  const createDemoRequest = ({ name, email, phone }) => {
-    const apiURL = 'https://artel.one/api/v2/order/profiles'
-
-    console.log({ name, email, phone })
-
-    fetch(apiURL,
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-          profile_name: name,
-          profile_email: email,
-          profile_phone: phone,
-          company_name: '',
-          company_role: '',
-        })
-      })
-      .then(function(res){
-        console.log(res)
-
-        setIsSuccessSent(true)
-      })
-      .catch(function(res){
-        console.log(res)
-      })
-  }
+  const closeRequestModal = () => {
+    setIsRequestFormOpen(false);
+  };
 
   return (
-    <>
-      <Transition appear show={isRequestFormOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
+    <div className="bg-white2 font-inter">
+      {isCookieConsentOpened && (
+        <CookieConsent
+          onAgree={agreeCookies}
+          onDisagree={() => setIsCookieConsentOpened(false)}
+        />
+      )}
+      <RequestModal isVisible={isRequestFormOpen} onClose={closeRequestModal} />
+      <Presentation onRequestDemo={openRequestModal} />
+      <_Feature1 />
+      <_Feature2 />
+      <_Feature3 />
+      <_Feature4 />
+      <_Results />
+      <_Advantages />
+      <_Cases />
+      <_HowItWorks />
+      <_Dashboard />
+      <_Feedback />
+      <_Price />
+      <_Demo onRequestDemo={openRequestModal} />
+      <_Footer />
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  {/*<Dialog.Title*/}
-                  {/*  as="h3"*/}
-                  {/*  className="text-lg font-medium leading-6 text-gray-900"*/}
-                  {/*>*/}
-                  {/*  Payment successful*/}
-                  {/*</Dialog.Title>*/}
-                  <div className="mt-2">
-                    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-                      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                        {
-                          isSuccessSent ?
-                            <>
-                              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                                <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Thank you for your inquiry!</h2>
-                              </div>
-                              <div className="mt-4 text-center">
-                                We will contact you in 24 hours
-                              </div>
-
-                              <div>
-                                <button
-                                  type="button"
-                                  className="flex w-full justify-center rounded-md mt-6 bg-prime px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-opacity-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                  onClick={closeModal}
-                                >
-                                  Close
-                                </button>
-                              </div>
-                            </>
-                          : (
-                            <>
-                              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                                <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Request a demo</h2>
-                              </div>
-
-                              <form
-                                className="space-y-6"
-                                action="#" method="POST"
-                                onSubmit={(e) => {
-                                  e.preventDefault()
-
-                                  console.log(e.target.elements)
-
-                                  if (!e.target || !e.target.elements) return false
-
-                                  createDemoRequest({
-                                    name: e.target.elements.name.value,
-                                    email: e.target.elements.email.value,
-                                    phone: e.target.elements.phone.value
-                                  })
-                                }}
-                              >
-                                <div>
-                                  <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">Name *</label>
-                                  <div className="mt-2">
-                                    <input id="name" name="name" type="text" autoComplete="name" required className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                                  </div>
-                                </div>
-
-                                <div>
-                                  <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email *</label>
-                                  <div className="mt-2">
-                                    <input id="email" name="email" type="email" autoComplete="email" required className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                                  </div>
-                                </div>
-
-                                <div>
-                                  <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">Phone *</label>
-                                  <div className="mt-2">
-                                    <input id="phone" name="phone" type="text" autoComplete="phone" required className="block w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                                  </div>
-                                </div>
-
-                                <div>
-                                  <button type="submit" className="flex w-full justify-center rounded-md bg-prime px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-opacity-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    Send
-                                  </button>
-                                </div>
-                              </form>
-                            </>
-                          )
-                        }
-
-                        {/*<p className="mt-10 text-center text-sm text-gray-500">*/}
-                        {/*  Not a member?*/}
-                        {/*  <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Start a 14 day free trial</a>*/}
-                        {/*</p>*/}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/*<div className="mt-4">*/}
-                  {/*  <button*/}
-                  {/*    type="button"*/}
-                  {/*    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"*/}
-                  {/*    onClick={closeModal}*/}
-                  {/*  >*/}
-                  {/*    Got it, thanks!*/}
-                  {/*  </button>*/}
-                  {/*</div>*/}
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-      {
-        mobileMenuOpen &&
-        <div className="fixed left-0 right-0 z-8 top-0 bottom-0 bg-gray-950/50" />
-      }
-
-      {/*<Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>*/}
-      {/*  <div className="fixed inset-0 z-10" />*/}
-      {/*  <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">*/}
-      {/*    <div className="flex items-center justify-between">*/}
-      {/*      <a href="#" className="-m-1.5 p-1.5">*/}
-      {/*        <img*/}
-      {/*          className="h-4 w-auto"*/}
-      {/*          src={logoImage}*/}
-      {/*          alt=""*/}
-      {/*        />*/}
-      {/*      </a>*/}
-      {/*      <button*/}
-      {/*        type="button"*/}
-      {/*        className="-m-2.5 rounded-md p-2.5 text-gray-700"*/}
-      {/*        onClick={() => setMobileMenuOpen(false)}*/}
-      {/*      >*/}
-      {/*        <span className="sr-only">Close menu</span>*/}
-      {/*        <XMarkIcon className="h-6 w-6" aria-hidden="true" />*/}
-      {/*      </button>*/}
-      {/*    </div>*/}
-      {/*    <div className="mt-6 flow-root">*/}
-      {/*      <div className="-my-6 divide-y divide-gray-500/10">*/}
-      {/*        <div className="space-y-2 py-6">*/}
-      {/*          <a*/}
-      {/*            href="#"*/}
-      {/*            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"*/}
-      {/*          >*/}
-      {/*            Solutions*/}
-      {/*          </a>*/}
-      {/*          <a*/}
-      {/*            href="#"*/}
-      {/*            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"*/}
-      {/*          >*/}
-      {/*            Features*/}
-      {/*          </a>*/}
-      {/*          <a*/}
-      {/*            href="#"*/}
-      {/*            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"*/}
-      {/*          >*/}
-      {/*            Advantages*/}
-      {/*          </a>*/}
-      {/*          <a*/}
-      {/*            href="#"*/}
-      {/*            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"*/}
-      {/*          >*/}
-      {/*            Cases*/}
-      {/*          </a>*/}
-      {/*          <a*/}
-      {/*            href="#"*/}
-      {/*            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"*/}
-      {/*          >*/}
-      {/*            Price*/}
-      {/*          </a>*/}
-      {/*          <a*/}
-      {/*            href="#"*/}
-      {/*            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"*/}
-      {/*          >*/}
-      {/*            Contact*/}
-      {/*          </a>*/}
-      {/*        </div>*/}
-      {/*        <div className="py-6">*/}
-      {/*          /!*<div className="hidden lg:ml-auto lg:flex lg:items-center lg:space-x-8 xl:space-x-10">*!/*/}
-      {/*            <a href="#" title="" onClick={openModal} className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-prime border border-transparent rounded-xl hover:opacity-90 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" role="button">*/}
-      {/*              Request demo*/}
-      {/*            </a>*/}
-      {/*          /!*</div>*!/*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </Dialog.Panel>*/}
-      {/*</Dialog>*/}
-
-      <div className="bg-white">
-        <header className="py-4 md:py-6">
-          <div className="container px-4 mx-auto sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between">
-              <div className="flex-shrink-0">
-                <a href="#" title="" className="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-                  <img className="w-auto h-5" src={logoImage} alt="" />
-                </a>
-              </div>
-
-              {/*<div className="flex lg:hidden">*/}
-              {/*  <button type="button" className="text-gray-900" onClick={() => setMobileMenuOpen(true)}>*/}
-              {/*    <svg className="w-7 h-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">*/}
-              {/*      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 6h16M4 12h16M4 18h16"></path>*/}
-              {/*    </svg>*/}
-              {/*  </button>*/}
-              {/*</div>*/}
-
-              <div className="hidden lg:flex lg:ml-10 xl:ml-16 lg:items-center lg:justify-center lg:space-x-8 xl:space-x-16">
-                {/*<a href="#" title="" className="text-base font-semibold text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">*/}
-                {/*  Solutions*/}
-                {/*</a>*/}
-
-                {/*<a href="#" title="" className="text-base font-semibold text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">*/}
-                {/*  Features*/}
-                {/*</a>*/}
-
-                {/*<a href="#" title="" className="text-sm font-semibold text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">*/}
-                {/*  Advantages*/}
-                {/*</a>*/}
-
-                {/*<a href="#" title="" className="text-base font-semibold text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">*/}
-                {/*  Cases*/}
-                {/*</a>*/}
-
-                {/*<a href="#" title="" className="text-base font-semibold text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">*/}
-                {/*  Price*/}
-                {/*</a>*/}
-
-                {/*<a href="#" title="" className="text-base font-semibold text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">*/}
-                {/*  Contact*/}
-                {/*</a>*/}
-              </div>
-
-              <div className="lg:ml-auto lg:items-center lg:space-x-8 xl:space-x-10">
-                <a href="#" title="" onClick={openModal} className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-prime border border-transparent rounded-xl hover:opacity-90 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900" role="button">
-                  Request demo
-                </a>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <section className="overflow-hidden pb-12 xl:pb-24"> {/*pb-12  sm:pb-16*/}
-          <div className="pt-12 container mx-auto sm:px-6 lg:px-8 relative">
-            <div className="absolute 2xl:top-[-56px] 2xl:left-[733px] xl:left-[600px] xl:top-[20px] lg:left-[400px] lg:top-[90px]">
-              <img className="min-w-[1087px] h-[753px] hidden lg:block" src={dashboardImage} alt="" />
-            </div>
-
-            <div className="px-4 mx-auto max-w-7xl"> {/*px-4  sm:px-6 lg:px-8*/}
-              <div className="grid max-w-lg grid-cols-1 mx-auto lg:max-w-full lg:items-center lg:grid-cols-2 gap-y-12 lg:gap-x-16">
-                <div>
-                  <div className="text-center lg:text-left">
-                    <h1 className="text-4xl font-extrabold leading-tight text-gray-900 sm:text-5xl sm:leading-tight lg:leading-tight lg:text-6xl font-pj relative">
-                      <img src={titleDecoration} alt="" className="absolute w-[372px] h-[110px] z-0 hidden sm:block sm:top-[-20px] lg:left-[-63px] lg:top-[-10px]" />
-                      <img src={titleDecoration2} alt="" className="absolute w-[331px] h-[120px] z-0 hidden sm:block sm:left-[273px] sm:w-[240px] lg:left-[-20px] lg:w-[310px] xl:left-[263px] bottom-[-30px]" />
-                      <span className="z-0 relative font-pj">Maximise your marketing channels efficiency with AI</span>
-                    </h1>
-                    <p className="mt-2 text-lg text-gray-600 sm:mt-8">
-                      We will significantly improve key metrics employing predictive AI analytics and ML algorithms to optimise your marketing activities
-                    </p>
-                  </div>
-
-                  <div className="flex gap-4 sm:gap-7 mt-10 flex-col sm:flex-row">
-                    <a href="#" title="" onClick={openModal} className="px-10 py-3 text-lg leading-6 font-bold text-white transition-all duration-200 bg-prime border border-transparent rounded-xl hover:opacity-90 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 sm:w-1/2 lg:w-auto text-center" role="button">
-                      Get started
-                    </a>
-                    <a href="#" title="" onClick={openModal} className="px-10 py-3 text-lg leading-6 font-bold text-black transition-all duration-200 box-border border-[3px] border-violet rounded-xl hover:bg-prime hover:text-white font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 sm:w-1/2 lg:w-auto text-center" role="button">
-                      Talk to sales
-                    </a>
-                  </div>
-
-                  <div className="flex items-center justify-center mt-10 space-x-6 lg:justify-start sm:space-x-8">
-                    <div className="flex items-center">
-                      <p>
-                        <span className="text-2xl font-bold text-gray-900 sm:text-4xl font-inter">&#10005;</span>
-                        <span className="text-3xl font-bold text-gray-900 sm:text-5xl font-pj">2</span>
-                      </p>
-                      <p className="ml-3 text-sm text-gray-900"><span className="font-bold">Сbuyer</span> with ML-scoring <br />segments</p>
-                    </div>
-
-                    <div className="flex items-center">
-                      <p>
-                        <span className="text-2xl font-bold text-gray-900 sm:text-4xl font-inter">&#10005;</span>
-                        <span className="text-3xl font-bold text-gray-900 sm:text-5xl font-pj">4</span>
-                      </p>
-                      <p className="ml-3 text-sm text-gray-900"><span className="font-bold">ROMI</span> with ML-scoring <br />segments</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="pt-12 pb-12 sm:pb-8 lg:pt-8 bg-black">
-          <div className="flex flex-col lg:flex-row justify-between px-4 py-11 container mx-auto sm:px-8 lg:px-10 gap-14 lg:gap-4 lg:max-w-7xl max-w-lg">
-            <div className="flex flex-col lg:w-1/3">
-              <img className="w-14 pl-3" src={rocketIcon} alt="" />
-              <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">Boosted profits</p>
-              <p className="text-lg text-gray-300 mt-5">
-                Cutting edge advantage <br className="hidden lg:block" />
-                of tailored ML resulting in boosted <br className="hidden lg:block" />
-                ROMI, ARPU and reduced CAC, Churn
-              </p>
-            </div>
-            <div className="flex flex-col lg:w-1/3">
-              <img className="w-14 pl-3" src={translatorIcon} alt="" />
-              <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">ML-attribution</p>
-              <p className="text-lg text-gray-300 mt-5">
-                Find out which marketing channel is most likely to lead to customer conversions
-              </p>
-            </div>
-            <div className="flex flex-col lg:w-1/3">
-              <img className="w-14 pl-3" src={diagramIcon} alt="" />
-              <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">Predictive analytics</p>
-              <p className="text-lg text-gray-300 mt-5">
-                Enrich your customer data with accurate predictions of their future actions and value: Lead, Cbuyer, ARPU, LTV...
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col lg:flex-row justify-between px-4 py-11 container mx-auto sm:px-8 lg:px-10 gap-14 lg:gap-4 lg:max-w-7xl max-w-lg">
-            <div className="flex flex-col lg:w-1/3">
-              <img className="w-14 pl-3" src={rocketIcon} alt="" />
-              <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">Data personalisation</p>
-              <p className="text-lg text-gray-300 mt-5">
-                Offer personalised pricing and suggestions <br className="hidden lg:block" />
-                to your customers based on their interests <br className="hidden lg:block" />
-                and behaviours
-              </p>
-            </div>
-            <div className="flex flex-col lg:w-1/3">
-              <img className="w-14 pl-3" src={translatorIcon} alt="" />
-              <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">ML experiments</p>
-              <p className="text-lg text-gray-300 mt-5">
-                Flexible system of iterative A/B tests <br className="hidden lg:block" />on HADI cycles for marketing activities
-              </p>
-            </div>
-            <div className="flex flex-col lg:w-1/3">
-              <img className="w-14 pl-3" src={diagramIcon} alt="" />
-              <p className="text-xl font-bold text-white sm:text-base font-pj mt-8">End-to-end analytics</p>
-              <p className="text-lg text-gray-300 mt-5">
-                Comprehensive customer data from all sites and channels in one place
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {
-          isCookieConsentOpened &&
-          <div className="max-w-screen-lg mx-auto fixed bg-white inset-x-5 p-5 bottom-10 rounded-lg drop-shadow-2xl flex gap-4 flex-wrap md:flex-nowrap text-center md:text-left items-center justify-center md:justify-between">
-            <div className="w-full">
-              By clicking “Allow Cookies” you agree to our website′s cookie use as described in our{' '}
-              <a href="#" className="text-prime whitespace-nowrap hover:underline">Cookies Policy</a>.
-            </div>
-            <div className="flex gap-4 items-center flex-shrink-0">
-              <button className="text-prime focus:outline-none hover:underline" onClick={() => setIsCookieConsentOpened(false)}>Decline</button>
-              <button className="bg-prime px-5 py-2 text-white rounded-md hover:opacity-95 focus:outline-none" onClick={agreeCookies}>Allow Cookies</button>
-            </div>
-          </div>
-        }
-      </div>
-
-      {/*<div className="text-prime">f6</div>*/}
+      {/*<div className="bg-black text-prime">f6</div>*/}
       {/*<Feature6 />*/}
-      {/*<div className="text-prime">f1</div>*/}
+      {/*<div className="bg-black text-prime">f1</div>*/}
       {/*<Feature />*/}
-      {/*<div className="text-prime">ГАЛКИ</div>*/}
+      {/*<div className="bg-black text-prime">ГАЛКИ</div>*/}
       {/*<div className="text-prime">stats</div>*/}
       {/*<Stats />*/}
       {/*<div className="text-prime">f4</div>*/}
@@ -489,102 +106,1574 @@ function App() {
       {/*<Feature5 />*/}
       {/*<Footer />*/}
 
-
       {/*<CallToAction />*/}
       {/*<div className="text-prime">f2</div>*/}
       {/*<Feature2 />*/}
 
-
-      <footer className="bg-black">
-        <div className="py-6 lg:py-8 container sm:px-6 lg:px-8 px-4 mx-auto max-w-7xl">
-          <hr className="mb-6 border-gray-700 sm:mx-auto lg:mb-8" />
-          <div className="md:flex md:justify-between">
-            <div className="mb-6 md:mb-0">
-            </div>
-            <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-              <div>
-              {/*  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>*/}
-              {/*  <ul className="text-gray-500 dark:text-gray-400 font-medium">*/}
-              {/*    <li className="mb-4">*/}
-              {/*      <a href="https://flowbite.com/" className="hover:underline">Flowbite</a>*/}
-              {/*    </li>*/}
-              {/*    <li>*/}
-              {/*      <a href="https://tailwindcss.com/" className="hover:underline">Tailwind CSS</a>*/}
-              {/*    </li>*/}
-              {/*  </ul>*/}
-              </div>
-              <div>
-              {/*  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>*/}
-              {/*  <ul className="text-gray-500 dark:text-gray-400 font-medium">*/}
-              {/*    <li className="mb-4">*/}
-              {/*      <a href="https://github.com/themesberg/flowbite" className="hover:underline ">Github</a>*/}
-              {/*    </li>*/}
-              {/*    <li>*/}
-              {/*      <a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Discord</a>*/}
-              {/*    </li>*/}
-              {/*  </ul>*/}
-              </div>
-              <div>
-                <h2 className="mb-6 text-sm font-semibold text-white uppercase">Legal</h2>
-                <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                  <li className="mb-4">
-                    <a href="/docs/terms-and-conditions.pdf" className="hover:underline">Terms and Conditions</a>
-                  </li>
-                  <li className="mb-4">
-                    <a href="/docs/privacy-policy.pdf" className="hover:underline">Privacy Policy</a>
-                  </li>
-                  <li className="mb-4">
-                    <a href="/docs/cookie-policy.pdf" className="hover:underline">Cookies Policy</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <hr className="my-6 border-gray-700 sm:mx-auto lg:my-8" />
-          <div className="sm:flex sm:items-center sm:justify-between">
-            <a href="#" title="" className="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2 mb-2 sm:mb-0">
-              <img className="w-auto h-4" src={logoWhiteImage} alt="" />
-            </a>
-            <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-              © 2023 Reboost.ai. All rights reserved.
-            </span>
-            {/*<div className="flex mt-4 sm:justify-center sm:mt-0">*/}
-            {/*  <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">*/}
-            {/*    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">*/}
-            {/*      <path fillRule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>*/}
-            {/*    </svg>*/}
-            {/*    <span className="sr-only">Facebook page</span>*/}
-            {/*  </a>*/}
-            {/*  <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">*/}
-            {/*    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 21 16">*/}
-            {/*      <path d="M16.942 1.556a16.3 16.3 0 0 0-4.126-1.3 12.04 12.04 0 0 0-.529 1.1 15.175 15.175 0 0 0-4.573 0 11.585 11.585 0 0 0-.535-1.1 16.274 16.274 0 0 0-4.129 1.3A17.392 17.392 0 0 0 .182 13.218a15.785 15.785 0 0 0 4.963 2.521c.41-.564.773-1.16 1.084-1.785a10.63 10.63 0 0 1-1.706-.83c.143-.106.283-.217.418-.33a11.664 11.664 0 0 0 10.118 0c.137.113.277.224.418.33-.544.328-1.116.606-1.71.832a12.52 12.52 0 0 0 1.084 1.785 16.46 16.46 0 0 0 5.064-2.595 17.286 17.286 0 0 0-2.973-11.59ZM6.678 10.813a1.941 1.941 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.919 1.919 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Zm6.644 0a1.94 1.94 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.918 1.918 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Z"/>*/}
-            {/*    </svg>*/}
-            {/*    <span className="sr-only">Discord community</span>*/}
-            {/*  </a>*/}
-            {/*  <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">*/}
-            {/*    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">*/}
-            {/*      <path fillRule="evenodd" d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z" clip-rule="evenodd"/>*/}
-            {/*    </svg>*/}
-            {/*    <span className="sr-only">Twitter page</span>*/}
-            {/*  </a>*/}
-            {/*  <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">*/}
-            {/*    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">*/}
-            {/*      <path fillRule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>*/}
-            {/*    </svg>*/}
-            {/*    <span className="sr-only">GitHub account</span>*/}
-            {/*  </a>*/}
-            {/*  <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">*/}
-            {/*    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">*/}
-            {/*      <path fillRule="evenodd" d="M10 0a10 10 0 1 0 10 10A10.009 10.009 0 0 0 10 0Zm6.613 4.614a8.523 8.523 0 0 1 1.93 5.32 20.094 20.094 0 0 0-5.949-.274c-.059-.149-.122-.292-.184-.441a23.879 23.879 0 0 0-.566-1.239 11.41 11.41 0 0 0 4.769-3.366ZM8 1.707a8.821 8.821 0 0 1 2-.238 8.5 8.5 0 0 1 5.664 2.152 9.608 9.608 0 0 1-4.476 3.087A45.758 45.758 0 0 0 8 1.707ZM1.642 8.262a8.57 8.57 0 0 1 4.73-5.981A53.998 53.998 0 0 1 9.54 7.222a32.078 32.078 0 0 1-7.9 1.04h.002Zm2.01 7.46a8.51 8.51 0 0 1-2.2-5.707v-.262a31.64 31.64 0 0 0 8.777-1.219c.243.477.477.964.692 1.449-.114.032-.227.067-.336.1a13.569 13.569 0 0 0-6.942 5.636l.009.003ZM10 18.556a8.508 8.508 0 0 1-5.243-1.8 11.717 11.717 0 0 1 6.7-5.332.509.509 0 0 1 .055-.02 35.65 35.65 0 0 1 1.819 6.476 8.476 8.476 0 0 1-3.331.676Zm4.772-1.462A37.232 37.232 0 0 0 13.113 11a12.513 12.513 0 0 1 5.321.364 8.56 8.56 0 0 1-3.66 5.73h-.002Z" clip-rule="evenodd"/>*/}
-            {/*    </svg>*/}
-            {/*    <span className="sr-only">Dribbble account</span>*/}
-            {/*  </a>*/}
-            {/*</div>*/}
-          </div>
-        </div>
-      </footer>
-    </>
-  )
+      {/*<div className="flex flex-col bg-neutral-50">*/}
+      {/*  <div className="flex w-full flex-col items-stretch self-stretch bg-white pt-4 max-md:max-w-full">*/}
+      {/*    <div className="flex w-full flex-col items-stretch px-9 max-md:max-w-full max-md:px-5">*/}
+      {/*      <div className="flex w-full items-center justify-between gap-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*        <div className="my-auto flex items-start justify-between gap-5 max-md:max-w-full max-md:flex-wrap max-md:justify-center">*/}
+      {/*          <img*/}
+      {/*            loading="lazy"*/}
+      {/*            src="https://cdn.builder.io/api/v1/image/assets/TEMP/06b26a09032976ab8332f84bb13a3f02c3623e0282a0c271e2bedf52b017e057?"*/}
+      {/*            className="aspect-[9] w-[171px] max-w-full shrink-0 self-stretch overflow-hidden object-contain object-center"*/}
+      {/*          />*/}
+      {/*          <div className="my-auto self-center text-sm font-semibold leading-6 text-zinc-900">*/}
+      {/*            Solutions*/}
+      {/*          </div>*/}
+      {/*          <div className="my-auto self-center text-sm font-semibold leading-6 text-zinc-900">*/}
+      {/*            Features*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-1.5 self-start text-sm font-semibold leading-6 text-zinc-900">*/}
+      {/*            Advantages*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-2 self-start text-sm font-semibold leading-6 text-zinc-900">*/}
+      {/*            Сases*/}
+      {/*          </div>*/}
+      {/*          <div className="my-auto self-center text-sm font-semibold leading-6 text-zinc-900">*/}
+      {/*            Price*/}
+      {/*          </div>*/}
+      {/*          <div className="my-auto self-center whitespace-nowrap text-sm font-semibold leading-6 text-zinc-900">*/}
+      {/*            Contact*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*        <div className="items-stretch justify-center self-stretch whitespace-nowrap rounded-xl bg-violet-700 px-7 py-3 text-right text-base font-bold leading-6 text-white max-md:px-5">*/}
+      {/*          Request demo*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/ca92145752fd285ab83198d479ea1ad828f0f35ae5ee3619e145d4cb71377d30?"*/}
+      {/*        className="ml-12 mt-28 aspect-[1.47] w-[741px] max-w-full self-start overflow-hidden object-contain object-center max-md:mt-10"*/}
+      {/*      />*/}
+      {/*    </div>*/}
+      {/*    <div className="z-[1] mb-0 mt-20 flex w-full flex-col items-center justify-center bg-zinc-900 px-16 py-10 shadow-lg max-md:mb-2.5 max-md:mt-10 max-md:max-w-full max-md:px-5">*/}
+      {/*      <div className="w-full max-w-[1250px] max-md:max-w-full">*/}
+      {/*        <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*          <div className="flex w-[35%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex grow flex-col items-start justify-center max-md:mt-10">*/}
+      {/*              <div className="flex h-[76px] w-[76px] flex-col items-center justify-center rounded-[365.135px] bg-[linear-gradient(0deg,#18181B_0%,#18181B_100%),#6922EC] px-3.5">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/1b5ac400aed9c279f0a17bc676d294b7edca14342388c9d116b2ed54e1a36ef2?"*/}
+      {/*                  className="aspect-square w-full items-center justify-center overflow-hidden object-contain object-center"*/}
+      {/*                />*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 self-stretch text-xl font-bold text-white">*/}
+      {/*                Boosted profits*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 self-stretch text-lg font-medium text-zinc-300">*/}
+      {/*                Cutting edge advantage  of tailored ML resulting in*/}
+      {/*                boosted ROMI, ARPU and reduced CAC, Churn*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*          <div className="ml-5 flex w-[35%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex flex-col items-start justify-center max-md:mt-10">*/}
+      {/*              <div className="flex h-[76px] w-[76px] flex-col items-center justify-center rounded-[365.135px] bg-[linear-gradient(0deg,#18181B_0%,#18181B_100%),#6922EC] px-3">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/a4983914b1cabc45d11a40a5559a882b20daedb1bed0bee8eb849dd8e940d3f9?"*/}
+      {/*                  className="aspect-square w-full overflow-hidden object-contain object-center"*/}
+      {/*                />*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 self-stretch text-xl font-bold text-white">*/}
+      {/*                ML-attribution*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 self-stretch text-lg font-medium text-zinc-300">*/}
+      {/*                Find out which marketing channel is most likely to lead to*/}
+      {/*                customer conversions*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*          <div className="ml-5 flex w-[30%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex grow flex-col items-start justify-center max-md:mt-10">*/}
+      {/*              <div className="flex h-[76px] w-[76px] flex-col items-center justify-center rounded-[365.135px] bg-neutral-900 px-3">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/56b27ad63eb8fd56ed7443a41dcb6cd36fc0e7eda70b4eae76df8ce7bd6c04b8?"*/}
+      {/*                  className="aspect-square w-full overflow-hidden object-contain object-center"*/}
+      {/*                />*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 self-stretch text-xl font-bold text-white">*/}
+      {/*                Predictive analytics*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 self-stretch text-lg font-medium text-zinc-300">*/}
+      {/*                Enrich your customer data with accurate predictions of*/}
+      {/*                their future actions and value: Lead, Cbuyer, ARPU, LTV...*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-24 flex w-full flex-col items-center justify-center self-stretch bg-zinc-900 px-16 py-12 max-md:mt-10 max-md:max-w-full max-md:px-5">*/}
+      {/*    <div className="w-full max-w-[1250px] max-md:max-w-full">*/}
+      {/*      <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*        <div className="flex w-[35%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="flex grow flex-col items-start justify-center max-md:mt-10">*/}
+      {/*            <div className="flex h-[76px] w-[76px] flex-col items-center justify-center rounded-[365.135px] bg-[linear-gradient(0deg,#18181B_0%,#18181B_100%),#6922EC] px-3.5">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/1b5ac400aed9c279f0a17bc676d294b7edca14342388c9d116b2ed54e1a36ef2?"*/}
+      {/*                className="aspect-square w-full items-center justify-center overflow-hidden object-contain object-center"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*            <div className="mt-5 self-stretch text-xl font-bold text-white">*/}
+      {/*              Data personalisation*/}
+      {/*            </div>*/}
+      {/*            <div className="mt-5 self-stretch text-lg font-medium text-zinc-300">*/}
+      {/*              Offer personalised pricing and suggestions  to your*/}
+      {/*              customers based on their interests  and behaviours*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*        <div className="ml-5 flex w-[35%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="flex flex-col items-start justify-center max-md:mt-10">*/}
+      {/*            <div className="flex h-[76px] w-[76px] flex-col items-center justify-center rounded-[365.135px] bg-[linear-gradient(0deg,#18181B_0%,#18181B_100%),#6922EC] px-3">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/a4983914b1cabc45d11a40a5559a882b20daedb1bed0bee8eb849dd8e940d3f9?"*/}
+      {/*                className="aspect-square w-full overflow-hidden object-contain object-center"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*            <div className="mt-5 self-stretch text-xl font-bold text-white">*/}
+      {/*              ML-experiments*/}
+      {/*            </div>*/}
+      {/*            <div className="mt-5 self-stretch text-lg font-medium text-zinc-300">*/}
+      {/*              Flexible system of iterative A/B tests  on HADI cycles for*/}
+      {/*              marketing activities*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*        <div className="ml-5 flex w-[30%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="flex flex-col items-start justify-center max-md:mt-10">*/}
+      {/*            <div className="flex h-[76px] w-[76px] flex-col items-center justify-center rounded-[365.135px] bg-neutral-900 px-3">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/56b27ad63eb8fd56ed7443a41dcb6cd36fc0e7eda70b4eae76df8ce7bd6c04b8?"*/}
+      {/*                className="aspect-square w-full overflow-hidden object-contain object-center"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*            <div className="mt-5 self-stretch text-xl font-bold text-white">*/}
+      {/*              End-to-end analytics*/}
+      {/*            </div>*/}
+      {/*            <div className="mt-5 self-stretch text-lg font-medium text-zinc-300">*/}
+      {/*              Comprehensive customer data from all sites and channels in*/}
+      {/*              one place*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-36 items-stretch justify-center self-center whitespace-nowrap rounded-[100px] bg-violet-100 px-8 py-1.5 text-xl leading-9 text-violet-700 max-md:mt-10 max-md:px-5">*/}
+      {/*    Marketing with full AI power*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-11 max-w-[750px] self-center text-center text-5xl font-bold leading-10 text-violet-700 max-md:mt-10 max-md:max-w-full">*/}
+      {/*    <span className="text-zinc-900">Make Your ML Data —</span>*/}
+      {/*    <span className="text-violet-700"> Driven Decision</span>*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-12 max-w-screen-md self-center text-center text-xl leading-9 text-gray-500 max-md:mt-10 max-md:max-w-full">*/}
+      {/*    Reboost.ai work in real-time, calculating key metrics for each user,*/}
+      {/*    enriching with data from ML models*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-20 flex w-[1001px] max-w-full items-start justify-between gap-5 self-center px-5 max-md:mt-10 max-md:flex-wrap max-md:justify-center">*/}
+      {/*    <div className="flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*      <div className="whitespace-nowrap text-center text-base font-semibold uppercase leading-5 tracking-wider text-violet-700">*/}
+      {/*        Predictive analytics*/}
+      {/*      </div>*/}
+      {/*      <div className="mt-1.5 h-px shrink-0 bg-violet-700" />*/}
+      {/*      <div className="mt-3.5 text-xs leading-5 text-zinc-700">*/}
+      {/*        Accurate predictions across  the entire funnel*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="flex grow basis-[0%] flex-col items-stretch self-stretch">*/}
+      {/*      <div className="text-center text-base font-semibold uppercase leading-5 tracking-wider text-zinc-400">*/}
+      {/*        Smart Audience*/}
+      {/*      </div>*/}
+      {/*      <div className="mt-5 text-xs leading-5 text-zinc-400">*/}
+      {/*        Building audiences based on user value on the fly*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="flex grow basis-[0%] flex-col items-stretch self-stretch">*/}
+      {/*      <div className="whitespace-nowrap text-center text-base font-semibold uppercase leading-5 tracking-wider text-zinc-400">*/}
+      {/*        ML-attribution*/}
+      {/*      </div>*/}
+      {/*      <div className="mt-5 text-xs leading-5 text-zinc-400">*/}
+      {/*        All users and channels are  at your fingertips*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*      <div className="whitespace-nowrap text-center text-base font-semibold uppercase leading-5 tracking-wider text-zinc-400">*/}
+      {/*        PersonaliSation*/}
+      {/*      </div>*/}
+      {/*      <div className="mt-5 text-xs leading-5 text-zinc-400">*/}
+      {/*        High-precision personalisation based on customer behaviour*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <img*/}
+      {/*    loading="lazy"*/}
+      {/*    srcSet="..."*/}
+      {/*    className="mt-10 aspect-[1.6] w-[1088px] max-w-full self-center overflow-hidden object-contain object-center"*/}
+      {/*  />*/}
+      {/*  <div className="mt-32 max-w-[465px] self-center text-center text-lg font-medium leading-8 text-gray-500 max-md:mt-10">*/}
+      {/*    Three quick results for you*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-7 max-w-[612px] self-center text-center text-5xl font-bold leading-10 text-zinc-900 max-md:max-w-full">*/}
+      {/*    So how can you get quick results using reboost.ai*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-20 w-full max-w-[1296px] self-center px-5 max-md:mt-10 max-md:max-w-full">*/}
+      {/*    <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*      <div className="flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*          <div className="text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*            <span className="text-violet-700">Smart targeting</span>*/}
+      {/*            <span className="text-zinc-900">*/}
+      {/*              {" "}*/}
+      {/*              based  on profitable audiences*/}
+      {/*            </span>*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-6 text-base leading-7 text-zinc-900">*/}
+      {/*            You will be able to spend your advertising budget solely on*/}
+      {/*            those customers who are highly likely to make a purchase*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-4 flex flex-col items-stretch rounded-xl bg-zinc-900 px-14 pt-10 max-md:px-5">*/}
+      {/*            <div className="flex w-full flex-col items-stretch rounded-lg border-[0.915px] border-solid border-[color:var(--gray-200,#E4E4E7)] bg-white pb-1.5 pl-5 pr-20 pt-5 max-md:pr-5">*/}
+      {/*              <div className="text-xs font-bold uppercase leading-4 tracking-wider text-zinc-700 max-md:mr-1">*/}
+      {/*                Customers*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-6 flex items-stretch justify-between gap-3.5 max-md:mr-1">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  srcSet="..."*/}
+      {/*                  className="aspect-[0.97] w-8 max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*                />*/}
+      {/*                <div className="my-auto text-base font-bold leading-6 text-zinc-900">*/}
+      {/*                  Jenny Wilson*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 flex items-stretch justify-between gap-3.5 max-md:mr-1">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  srcSet="..."*/}
+      {/*                  className="aspect-[0.97] w-8 max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*                />*/}
+      {/*                <div className="my-auto text-base font-bold leading-6 text-zinc-900">*/}
+      {/*                  Cody Fisher*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 flex items-stretch justify-between gap-3.5 max-md:mr-1">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  srcSet="..."*/}
+      {/*                  className="aspect-square w-8 max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*                />*/}
+      {/*                <div className="my-auto text-base font-bold leading-6 text-zinc-900">*/}
+      {/*                  Robert Fox*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*              <div className="mt-5 flex items-stretch justify-between gap-3.5 max-md:mr-1">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  srcSet="..."*/}
+      {/*                  className="aspect-[0.97] w-8 max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*                />*/}
+      {/*                <div className="my-auto grow self-center whitespace-nowrap text-base font-bold leading-6 text-zinc-900">*/}
+      {/*                  Savannah Nguyen*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-9 text-base leading-7 text-zinc-700">*/}
+      {/*            Reboost.ai curates high-value audiences for you and integrates*/}
+      {/*            them into Meta, Google, etc. ad dashboards. You can utilise*/}
+      {/*            these for retargeting or look-alike strategies, effectively*/}
+      {/*            reducing ad costs by targeting only profitable users*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*          <div className="text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*            <span className="text-violet-700">Optimising strategy </span>*/}
+      {/*            <span className="text-zinc-900">through enriched data</span>*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-6 text-base leading-7 text-zinc-900">*/}
+      {/*            Reduce your expenses by focusing only on those clients who can*/}
+      {/*            genuinely bring you revenue*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-4 flex flex-col items-stretch justify-center rounded-xl bg-zinc-900 px-14 py-9 max-md:px-5">*/}
+      {/*            <div className="flex w-full flex-col items-stretch rounded-lg bg-white px-5 py-5 shadow-sm">*/}
+      {/*              <div className="flex items-stretch justify-between gap-5">*/}
+      {/*                <div className="text-xs font-bold leading-5 text-zinc-900">*/}
+      {/*                  Sale Report*/}
+      {/*                </div>*/}
+      {/*                <div className="text-right text-xs font-bold leading-5 text-zinc-300">*/}
+      {/*                  Mar 21-Apr 20*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0997263a14fa2f908cd8c2faa4b74139861c8a5c838c26810239287785205c11?"*/}
+      {/*                className="mt-8 aspect-[1.8] w-full overflow-hidden object-contain object-center"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*          <div className="mt-9 text-base leading-7 text-zinc-700">*/}
+      {/*            Adjust your campaign strategies on Meta and Google advertising*/}
+      {/*            dashboards to target customers who generate income for you.*/}
+      {/*            Also, concentrate your sales department's efforts on*/}
+      {/*            profitable customers*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex flex-col items-stretch max-md:mt-10">*/}
+      {/*          <div className="text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*            <span className="text-violet-700">Personalised offer </span>*/}
+      {/*            <span className="text-zinc-900"> with a precise hit</span>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-6 text-base leading-7 text-zinc-900">*/}
+      {/*            Offer your customers precisely what they crave based on their*/}
+      {/*            behavior and interests*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-12 flex flex-col items-stretch rounded-xl bg-zinc-900 pl-12 pt-10 max-md:mt-10 max-md:pl-5">*/}
+      {/*            <div className="z-[1] mb-0 flex flex-col items-stretch rounded-lg border-[0.909px] border-solid border-[color:var(--gray-200,#E4E4E7)] bg-white pb-10 pt-6 shadow-2xl max-md:mb-2.5">*/}
+      {/*              <div className="flex flex-col px-5 max-md:pr-5">*/}
+      {/*                <div className="flex items-stretch justify-between gap-3 self-stretch">*/}
+      {/*                  <img*/}
+      {/*                    loading="lazy"*/}
+      {/*                    srcSet="..."*/}
+      {/*                    className="aspect-[1.03] w-[33px] max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*                  />{" "}*/}
+      {/*                  <div className="shrink grow basis-auto self-start text-base font-bold leading-6 text-zinc-900">*/}
+      {/*                    Albert Flores*/}
+      {/*                  </div>*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="max-w-[264px] self-end text-base leading-6 text-zinc-600">*/}
+      {/*                  Thanks for the awesome feedback! We are trying to*/}
+      {/*                  implement this in our next update. Cheers!*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="mt-4 self-center whitespace-nowrap text-xs font-medium leading-5 text-zinc-400">*/}
+      {/*                  7 hours ago . Reply*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="mt-8 flex items-start gap-3 self-center">*/}
+      {/*                  <img*/}
+      {/*                    loading="lazy"*/}
+      {/*                    srcSet="..."*/}
+      {/*                    className="aspect-[1.03] w-[33px] max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*                  />{" "}*/}
+      {/*                  <div className="flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*                    <div className="text-base font-bold leading-6 text-zinc-900">*/}
+      {/*                      Eleanor Pena*/}
+      {/*                    </div>{" "}*/}
+      {/*                    <div className="mt-5 text-base leading-6 text-zinc-600">*/}
+      {/*                      <span className="font-bold text-zinc-900">*/}
+      {/*                        @Albert Flores*/}
+      {/*                      </span>*/}
+      {/*                      <span className=" text-zinc-600">*/}
+      {/*                        {" "}*/}
+      {/*                        That would be great!*/}
+      {/*                      </span>*/}
+      {/*                    </div>*/}
+      {/*                  </div>*/}
+      {/*                </div>*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mt-10 self-start text-base leading-7 text-zinc-700">*/}
+      {/*                By discerning who your users are, their interests, and*/}
+      {/*                autonomously analysing their behaviour, you can tailor*/}
+      {/*                your price offerings and necessary goods and services with*/}
+      {/*                pinpoint accuracy, thereby maximising your profit*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-32 max-w-[612px] self-center text-center text-5xl font-bold leading-10 text-zinc-900 max-md:mt-10 max-md:max-w-full">*/}
+      {/*    Even more opportunities  for your business*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-24 flex w-full max-w-[1186px] items-stretch justify-between gap-5 self-center max-md:mt-10 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*    <div className="flex items-start justify-between gap-5 px-5">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">Prediction of probabilities</span>*/}
+      {/*        <span className="">:  bid, order, purchase, churn, LTV...</span>*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-stretch justify-between gap-5 self-start px-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="my-auto shrink grow basis-auto self-center text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">*/}
+      {/*          Personalisation of customers according{" "}*/}
+      {/*        </span>*/}
+      {/*        <span className=""> to their needs and characteristics</span>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-14 flex w-full max-w-[1148px] items-stretch justify-between gap-5 self-center max-md:mt-10 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*    <div className="flex items-start justify-between gap-5 px-5">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-medium">On-the-fly user profiling</span>*/}
+      {/*        <span className="">  and segmentation</span>*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-start justify-between gap-5 self-start px-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">*/}
+      {/*          Prioritisation of potential customers{" "}*/}
+      {/*        </span>*/}
+      {/*        <span className=""> for the sales department</span>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-14 flex w-[1016px] max-w-full items-stretch justify-between gap-5 self-center max-md:mt-10 max-md:flex-wrap">*/}
+      {/*    <div className="flex items-start justify-between gap-5 px-5">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">*/}
+      {/*          Gathering effective audiences*/}
+      {/*        </span>*/}
+      {/*        <span className="">  for advertising offices</span>*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-stretch justify-between gap-5 self-start px-5">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="my-auto w-[574px] self-center text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">Personalising the price</span>*/}
+      {/*        <span className="">  for the customer</span>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-14 flex w-full max-w-[1128px] items-start justify-between gap-5 self-center max-md:mt-10 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*    <div className="flex items-stretch justify-between gap-5 px-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="my-auto shrink grow basis-auto self-center text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">*/}
+      {/*          Forecasting user conversions across*/}
+      {/*        </span>*/}
+      {/*        <span className=""> the entire sales funnel</span>*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-start justify-between gap-5 self-stretch px-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">*/}
+      {/*          A/B testing system with AI control*/}
+      {/*        </span>*/}
+      {/*        <span className="">  and results analysis</span>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-14 flex w-full max-w-[1134px] items-start justify-between gap-5 self-center max-md:mt-10 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*    <div className="flex items-stretch justify-between gap-5 px-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="my-auto shrink grow basis-auto self-center text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">*/}
+      {/*          Optimisation of advertising campaigns{" "}*/}
+      {/*        </span>*/}
+      {/*        <span className=""> with revenue maximisation</span>*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-start justify-between gap-5 self-stretch px-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/41a5d98db6694f2f62e0e5e051e415ea340d78b11dd9bec98b9df3707bc5a144?"*/}
+      {/*        className="aspect-square w-[60px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl leading-10 text-zinc-800">*/}
+      {/*        <span className="font-semibold">*/}
+      {/*          End-to-End analytics with revenue*/}
+      {/*        </span>*/}
+      {/*        <span className="">  and CAC and ROMI predictions</span>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-36 flex w-full max-w-[1413px] flex-col items-center justify-center self-center rounded-[30px] bg-[linear-gradient(0deg,#18181B_0%,#18181B_100%),#6922EC] px-16 py-12 max-md:mt-10 max-md:max-w-full max-md:px-5">*/}
+      {/*    <div className="mb-5 mt-5 flex w-[1040px] max-w-full flex-col items-stretch">*/}
+      {/*      <div className="max-w-[550px] self-center text-center text-5xl font-bold leading-10 text-white max-md:max-w-full">*/}
+      {/*        The results you can achieve*/}
+      {/*      </div>{" "}*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/95e7c49952fc923a74725e3605e61ebddf7f88b37d8418a5b929ce29e1d659f5?"*/}
+      {/*        className="mt-10 aspect-[12.58] w-[151px] max-w-full self-center overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="mt-11 max-md:mt-10 max-md:max-w-full">*/}
+      {/*        <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*          <div className="flex w-[84%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="grow max-md:mt-10 max-md:max-w-full">*/}
+      {/*              <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*                <div className="flex w-[36%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*                  <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*                    <div className="text-center text-5xl font-semibold leading-[62px] tracking-tighter text-white max-md:text-4xl max-md:leading-[53px]">*/}
+      {/*                      -80%*/}
+      {/*                      <br />*/}
+      {/*                      CAC{" "}*/}
+      {/*                    </div>{" "}*/}
+      {/*                    <div className="mt-7 whitespace-nowrap text-center text-base font-medium leading-6 text-white">*/}
+      {/*                      Reducing up to*/}
+      {/*                    </div>*/}
+      {/*                  </div>*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*                  <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*                    <div className="text-center text-5xl font-semibold leading-[62px] tracking-tighter text-white max-md:text-4xl max-md:leading-[53px]">*/}
+      {/*                      +400%  ROMI{" "}*/}
+      {/*                    </div>{" "}*/}
+      {/*                    <div className="mt-7 whitespace-nowrap text-center text-base font-medium leading-6 text-white">*/}
+      {/*                      increased up to 5 times*/}
+      {/*                    </div>*/}
+      {/*                  </div>*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="ml-5 flex w-[31%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*                  <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*                    <div className="text-center text-5xl font-semibold leading-[62px] tracking-tighter text-white max-md:text-4xl max-md:leading-[53px]">*/}
+      {/*                      +200% <br />*/}
+      {/*                      LTV{" "}*/}
+      {/*                    </div>{" "}*/}
+      {/*                    <div className="mt-7 whitespace-nowrap text-center text-base font-medium leading-6 text-white">*/}
+      {/*                      increase up to 2 times*/}
+      {/*                    </div>*/}
+      {/*                  </div>*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="ml-5 flex w-[16%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*              <div className="text-center text-5xl font-semibold leading-[62px] tracking-tighter text-white max-md:text-4xl max-md:leading-[53px]">*/}
+      {/*                -70% <br />*/}
+      {/*                Churn{" "}*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mt-7 whitespace-nowrap text-center text-base font-medium leading-6 text-white">*/}
+      {/*                Reduction up to{" "}*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-20 flex w-full flex-col items-center justify-center self-stretch bg-neutral-50 px-16 py-12 max-md:mt-10 max-md:max-w-full max-md:px-5">*/}
+      {/*    <div className="mb-32 mt-7 flex w-full max-w-[1342px] flex-col items-stretch max-md:mb-10 max-md:max-w-full">*/}
+      {/*      <div className="items-stretch justify-center self-center whitespace-nowrap rounded-[100px] bg-violet-100 px-8 py-1.5 text-xl leading-9 text-violet-700 max-md:px-5">*/}
+      {/*        Advantages*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mt-11 max-w-[775px] self-center text-center text-5xl font-bold leading-10 text-zinc-900 max-md:mt-10 max-md:max-w-full">*/}
+      {/*        Why does Reboost.ai outshine similar market solutions?*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mt-10 max-w-screen-md self-center text-center text-xl leading-9 text-gray-500 max-md:max-w-full">*/}
+      {/*        We maximise performance indicators where others  fail to achieve*/}
+      {/*        the same level of efficiency*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mt-16 max-md:mt-10 max-md:max-w-full">*/}
+      {/*        <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*          <div className="flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex w-full grow flex-col items-start rounded-xl bg-white py-10 pl-8 pr-14 shadow-sm max-md:mt-10 max-md:px-5">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/49d66e2a0fb9c1bdb6bfc493d09e26a630dfe6a737519546f443a236deeb1996?"*/}
+      {/*                className="aspect-[0.98] w-[49px] max-w-full overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-7 self-stretch text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*                Phenomenal (95%) prediction accuracy*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mt-8 self-stretch text-base leading-7 text-zinc-600">*/}
+      {/*                Predictions that our models provide show their*/}
+      {/*                effectiveness by analyzing a huge number of user*/}
+      {/*                behavioral factors and by optimizing models that take into*/}
+      {/*                account the specifics of your business.*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex w-full grow flex-col items-start rounded-xl bg-white px-8 py-12 shadow-sm max-md:mt-10 max-md:px-5">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ce984c5274342d05f40add8ebf2900a9478f141828693481e55a19330965802?"*/}
+      {/*                className="aspect-square w-[49px] max-w-full overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-5 self-stretch text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*                Assured KPI results*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mb-12 mt-11 self-stretch text-base leading-7 text-zinc-600 max-md:my-10">*/}
+      {/*                We pledge to reach agreed KPIs, with the final fee for our*/}
+      {/*                service dependent on how effectively we achieve desired*/}
+      {/*                outcomes.*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex w-full grow flex-col items-start rounded-xl bg-white py-11 pl-8 pr-9 shadow-sm max-md:mt-10 max-md:px-5">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8914ffd398a287fedc38298143dc107c9c3580e8e0980db772ad5adf900c9531?"*/}
+      {/*                className="aspect-square w-[49px] max-w-full overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-7 self-stretch text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*                Emphasis on your  business goals*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mb-4 mt-8 self-stretch text-base leading-7 text-zinc-600">*/}
+      {/*                We adopt an individualised approach for each client. Our*/}
+      {/*                experts fine-tune the specifics of your business and*/}
+      {/*                adjust models to cater to your interests.*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mt-20 max-md:mt-10 max-md:max-w-full">*/}
+      {/*        <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*          <div className="flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex w-full grow flex-col items-start rounded-xl bg-white py-11 pl-8 pr-12 shadow-sm max-md:mt-10 max-md:px-5">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/2c2c1002681327d9a650030fbfe68f74f74a0aee986077aab9983f38ef1b8ef1?"*/}
+      {/*                className="aspect-square w-[49px] max-w-full overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-7 self-stretch text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*                All-inclusive integrations*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mb-6 mt-8 self-stretch text-base leading-7 text-zinc-600">*/}
+      {/*                We swiftly integrate our product with your accounting*/}
+      {/*                systems, CRM, BI, and other significant analysis and*/}
+      {/*                marketing systems for your business.*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex w-full grow flex-col items-start rounded-xl bg-white px-8 py-12 shadow-sm max-md:mt-10 max-md:px-5">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ce984c5274342d05f40add8ebf2900a9478f141828693481e55a19330965802?"*/}
+      {/*                className="aspect-square w-[49px] max-w-full overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-5 self-stretch text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*                Unrestricted data access*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mb-12 mt-11 self-stretch text-base leading-7 text-zinc-600 max-md:my-10">*/}
+      {/*                Our product offers unlimited Data API access to events and*/}
+      {/*                raw data harvested by our tracker.*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex w-full grow flex-col items-start rounded-xl bg-white px-8 py-10 shadow-sm max-md:mt-10 max-md:px-5">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8914ffd398a287fedc38298143dc107c9c3580e8e0980db772ad5adf900c9531?"*/}
+      {/*                className="aspect-square w-[49px] max-w-full overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-7 self-stretch text-2xl font-bold leading-9 text-zinc-900">*/}
+      {/*                {" "}*/}
+      {/*                Bespoke tasks*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mt-10 self-stretch text-base leading-7 text-zinc-600">*/}
+      {/*                Should you require additional model development or*/}
+      {/*                specific task execution for your business, we're prepared*/}
+      {/*                to provide a dedicated team of ML experts. They'll develop*/}
+      {/*                the required functionality within stringent timelines.*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-4 flex w-full max-w-[1413px] flex-col items-center justify-center self-center rounded-[30px] bg-[linear-gradient(0deg,#18181B_0%,#18181B_100%),#6922EC] px-16 py-12 max-md:max-w-full max-md:px-5">*/}
+      {/*    <div className="mb-12 mt-6 flex w-[1088px] max-w-full flex-col items-stretch max-md:mb-10">*/}
+      {/*      <div className="w-[690px] self-center text-center text-5xl font-bold leading-10 text-white">*/}
+      {/*        Our cases*/}
+      {/*      </div>{" "}*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/95e7c49952fc923a74725e3605e61ebddf7f88b37d8418a5b929ce29e1d659f5?"*/}
+      {/*        className="mt-10 aspect-[12.58] w-[151px] max-w-full self-center overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="mt-10 flex items-start justify-between gap-5 max-md:max-w-full max-md:flex-wrap max-md:justify-center">*/}
+      {/*        <div className="mt-1 flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*          <div className="text-5xl font-bold leading-[60px] text-white max-md:text-4xl max-md:leading-[56px]">*/}
+      {/*            up to 28%*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-5 text-lg leading-7 text-zinc-300">*/}
+      {/*            Increased customer retention from 12.7% to 28% in July*/}
+      {/*            2022-July 2023*/}
+      {/*          </div>*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="my-auto h-[55px] w-px shrink-0 self-center bg-zinc-600" />{" "}*/}
+      {/*        <div className="flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*          <div className="whitespace-nowrap text-5xl font-bold leading-[60px] text-white max-md:text-4xl max-md:leading-[56px]">*/}
+      {/*            up to $206К*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-5 text-lg leading-7 text-zinc-300">*/}
+      {/*            Almost doubled revenues from $105K to $206K after implementing*/}
+      {/*            NLP models*/}
+      {/*          </div>*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="my-auto h-[55px] w-px shrink-0 self-center bg-zinc-600" />{" "}*/}
+      {/*        <div className="my-auto flex grow basis-[0%] flex-col items-stretch self-center">*/}
+      {/*          <div className="whitespace-nowrap text-5xl font-bold leading-[60px] text-white max-md:text-4xl max-md:leading-[56px]">*/}
+      {/*            up to 5x ROMI*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-4 text-lg leading-7 text-zinc-300">*/}
+      {/*            ROMI increased over 6 months from 95.75% to an average of 515%*/}
+      {/*            in February-July 2022*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-44 self-center whitespace-nowrap text-center text-5xl font-bold leading-10 text-zinc-900 max-md:mt-10">*/}
+      {/*    How it works*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-8 max-w-[609px] self-center text-center text-base leading-7 text-zinc-600 max-md:max-w-full">*/}
+      {/*    To start work, it is enough to integrate our script into a website or*/}
+      {/*    SDK into  a mobile application. We will do everything else ourselves*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-20 w-full max-w-[1295px] self-center px-5 max-md:mt-10 max-md:max-w-full">*/}
+      {/*    <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*      <div className="flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex w-full grow flex-col items-start rounded-2xl border border-solid border-[color:var(--gray-200,#E4E4E7)] bg-white py-11 pl-9 pr-7 max-md:mt-10 max-md:px-5">*/}
+      {/*          <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-5 text-center text-base font-bold leading-7 text-white">*/}
+      {/*            1*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mb-3.5 mt-7 self-stretch text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*            Easy integration of the service into your product*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="ml-5 flex w-[35%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex w-full grow flex-col items-start rounded-2xl border border-solid border-[color:var(--gray-200,#E4E4E7)] bg-white py-11 pl-9 pr-4 max-md:mt-10 max-md:pl-5">*/}
+      {/*          <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-4 text-center text-base font-bold leading-7 text-white">*/}
+      {/*            2*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mb-3.5 mt-7 self-stretch text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*            Analyzing user behavior and experimenting for improvement{" "}*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex w-full grow flex-col items-start rounded-2xl border border-solid border-[color:var(--gray-200,#E4E4E7)] bg-white py-8 pl-9 pr-20 max-md:mt-10 max-md:px-5">*/}
+      {/*          <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-4 text-center text-base font-bold leading-7 text-white">*/}
+      {/*            3*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-7 w-[313px] text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*            Enriching data, building audiences and launching marketing*/}
+      {/*            campaigns*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <img*/}
+      {/*    loading="lazy"*/}
+      {/*    srcSet="..."*/}
+      {/*    className="mt-20 aspect-[2.07] w-full max-w-[1295px] self-center overflow-hidden object-contain object-center max-md:mt-10 max-md:max-w-full"*/}
+      {/*  />{" "}*/}
+      {/*  <div className="mt-36 flex w-full max-w-[1240px] items-stretch justify-between gap-5 self-center px-5 max-md:mt-10 max-md:max-w-full max-md:flex-wrap max-md:justify-center">*/}
+      {/*    <div className="flex items-start justify-between gap-5 self-start">*/}
+      {/*      <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-5 text-center text-base font-bold leading-7 text-white">*/}
+      {/*        1*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*        You embed our script on your website*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-start justify-between gap-5 self-start">*/}
+      {/*      <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-4 text-center text-base font-bold leading-7 text-white">*/}
+      {/*        2*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*        Our tracker is starting to collect and analyze user events*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-start justify-between gap-5">*/}
+      {/*      <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-4 text-center text-base font-bold leading-7 text-white">*/}
+      {/*        3*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*        Our ML models are starting to make their first predictions and*/}
+      {/*        enrich user data{" "}*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-20 flex w-full max-w-[1261px] items-stretch justify-between gap-5 self-center px-5 max-md:mt-10 max-md:max-w-full max-md:flex-wrap max-md:justify-center">*/}
+      {/*    <div className="flex items-start justify-between gap-5 self-start">*/}
+      {/*      <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-4 text-center text-base font-bold leading-7 text-white">*/}
+      {/*        4*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*        Based on the data received, the service begins to gather audiences*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-start justify-between gap-5 self-start">*/}
+      {/*      <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-4 text-center text-base font-bold leading-7 text-white">*/}
+      {/*        5*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*        Audiences are sent to advertising offices and campaigns and other*/}
+      {/*      </div>*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="flex items-start justify-between gap-5">*/}
+      {/*      <div className="aspect-square h-[39px] items-center justify-center whitespace-nowrap rounded-xl bg-zinc-900 px-4 text-center text-base font-bold leading-7 text-white">*/}
+      {/*        6*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="shrink grow basis-auto text-xl font-medium leading-8 text-zinc-900">*/}
+      {/*        Run HADI cycles with continuous improvements in KPIs until the*/}
+      {/*        business reaches the goal*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-20 min-h-[1px] w-full self-stretch bg-violet-700 max-md:mt-10 max-md:max-w-full" />{" "}*/}
+      {/*  <div className="mt-16 items-stretch justify-center self-center whitespace-nowrap rounded-[100px] bg-violet-100 px-6 py-1.5 text-xl leading-9 text-violet-700 max-md:mt-10 max-md:px-5">*/}
+      {/*    {" "}*/}
+      {/*    Dashboard*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-12 max-w-[876px] self-center text-center text-5xl font-bold leading-10 text-zinc-900 max-md:mt-10 max-md:max-w-full">*/}
+      {/*    Control and monitoring always at your fingertips in an accessible*/}
+      {/*    dashboard{" "}*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-11 max-w-[757px] self-center text-center text-xl leading-9 text-gray-500 max-md:mt-10 max-md:max-w-full">*/}
+      {/*    To easily monitor your results, we have created a simple dashboard*/}
+      {/*    where you can follow the results of your experiments and manage your*/}
+      {/*    data*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-14 w-[800px] max-w-full self-center max-md:mt-10">*/}
+      {/*    <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*      <div className="flex w-[47%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*          <div className="flex items-stretch justify-between gap-3 px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/00a7753fc8afae701875e3814a45ed108d47aa5f20e48d667706b3e894f81b2f?"*/}
+      {/*              className="aspect-square w-[21px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="self-start text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*              Profit analytics and key metrics*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-6 flex items-stretch justify-between gap-3 px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/00a7753fc8afae701875e3814a45ed108d47aa5f20e48d667706b3e894f81b2f?"*/}
+      {/*              className="aspect-square w-[21px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="self-start text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*              Cross-cutting sales analytics{" "}*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-6 flex items-stretch justify-between gap-3 px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/00a7753fc8afae701875e3814a45ed108d47aa5f20e48d667706b3e894f81b2f?"*/}
+      {/*              className="aspect-square w-[21px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="grow self-start whitespace-nowrap text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*              Tracking the results of experiments*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="ml-5 flex w-[53%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*          <div className="flex items-stretch justify-between gap-3 px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/02c40d72863111e6ae86fed221c0114fc8d935625e5c28f9e3db6ff6ed364e54?"*/}
+      {/*              className="aspect-square w-[21px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="self-start text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*              Building profitable audiences*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-6 flex items-stretch justify-between gap-3 px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/02c40d72863111e6ae86fed221c0114fc8d935625e5c28f9e3db6ff6ed364e54?"*/}
+      {/*              className="aspect-square w-[21px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="grow self-start whitespace-nowrap text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*              Management and status of integrations*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-6 flex items-stretch justify-between gap-3 px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/02c40d72863111e6ae86fed221c0114fc8d935625e5c28f9e3db6ff6ed364e54?"*/}
+      {/*              className="aspect-square w-[21px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="self-start text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*              Dashboard access for employees*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-16 flex w-[682px] max-w-full items-start justify-between gap-3.5 self-center px-5 max-md:mt-10 max-md:flex-wrap max-md:justify-center">*/}
+      {/*    <div className="my-auto grow self-center whitespace-nowrap text-right text-5xl font-medium leading-[62px] text-zinc-900">*/}
+      {/*      Unlimited*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="my-auto self-center text-sm leading-5 text-zinc-900">*/}
+      {/*      Events*/}
+      {/*      <br />*/}
+      {/*      Tracker*/}
+      {/*    </div>{" "}*/}
+      {/*    <img*/}
+      {/*      loading="lazy"*/}
+      {/*      src="https://cdn.builder.io/api/v1/image/assets/TEMP/388ac7573f987a4c5a4aa5be6d2d7cbb5ee68b52b5f925456d356cbcb3c8fab2?"*/}
+      {/*      className="aspect-[0.39] w-[15px] max-w-full shrink-0 self-stretch overflow-hidden object-contain object-center"*/}
+      {/*    />{" "}*/}
+      {/*    <div className="my-auto text-right text-5xl font-medium leading-[62px] text-zinc-900">*/}
+      {/*      Unlimited*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="my-auto self-center text-sm leading-5 text-zinc-900">*/}
+      {/*      Account*/}
+      {/*      <br />*/}
+      {/*      for employees*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="relative mt-16 flex min-h-[737px] w-[1003px] max-w-full flex-col items-stretch self-center overflow-hidden pb-12 pl-14 pr-9 pt-4 max-md:mt-10 max-md:px-5">*/}
+      {/*    <img*/}
+      {/*      loading="lazy"*/}
+      {/*      srcSet="..."*/}
+      {/*      className="absolute inset-0 h-full w-full object-cover object-center"*/}
+      {/*    />{" "}*/}
+      {/*    <div className="relative mb-20 rounded-xl bg-stone-100 pl-14 pt-11 max-md:mb-10 max-md:max-w-full max-md:pl-5">*/}
+      {/*      <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*        <div className="flex w-[36%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="relative flex flex-col max-md:mt-10">*/}
+      {/*            <div className="flex w-full flex-col items-center justify-center self-stretch rounded-xl bg-zinc-900 px-16 py-3 max-md:px-5">*/}
+      {/*              <div className="flex items-center justify-center gap-2.5">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/811c67e5c6037553890cae5a5ccdfb8eb70506d0ae4c564196195bd9a246243a?"*/}
+      {/*                  className="my-auto aspect-[0.28] w-[5px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*                />{" "}*/}
+      {/*                <div className="grow self-stretch whitespace-nowrap text-right text-lg font-bold leading-6 text-white">*/}
+      {/*                  Add New Task*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-7 flex items-stretch gap-3 self-start">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                srcSet="..."*/}
+      {/*                className="aspect-square w-5 max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-1.5 self-start text-base font-medium leading-6 text-zinc-900">*/}
+      {/*                Open*/}
+      {/*              </div>*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-6 flex items-stretch justify-between gap-3 self-stretch">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                srcSet="..."*/}
+      {/*                className="aspect-square w-5 max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="my-auto shrink grow basis-auto self-center text-base font-medium leading-6 text-zinc-900">*/}
+      {/*                Planned*/}
+      {/*              </div>*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-6 flex items-start justify-between gap-3 self-stretch">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                srcSet="..."*/}
+      {/*                className="aspect-square w-5 max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-1.5 shrink grow basis-auto text-base font-medium leading-6 text-zinc-900">*/}
+      {/*                On Progress*/}
+      {/*              </div>*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-6 flex w-[66px] max-w-full items-stretch gap-3 self-start">*/}
+      {/*              <div className="flex h-5 flex-1 shrink-0 flex-col rounded border-[1.5px] border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*              <div className="my-auto self-center text-base font-medium leading-6 text-zinc-900">*/}
+      {/*                Hold*/}
+      {/*              </div>*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-6 flex items-stretch justify-between gap-3 self-stretch">*/}
+      {/*              <div className="flex h-5 w-[51px] shrink-0 flex-col rounded border-[1.5px] border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*              <div className="mt-1.5 text-base font-medium leading-6 text-zinc-900">*/}
+      {/*                Completed*/}
+      {/*              </div>*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-6 flex items-stretch gap-3 self-start">*/}
+      {/*              <div className="flex h-5 w-5 shrink-0 flex-col rounded border-[1.5px] border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*              <div className="my-auto self-center text-base font-medium leading-6 text-zinc-900">*/}
+      {/*                Closed*/}
+      {/*              </div>*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-28 flex w-full items-stretch justify-between gap-5 self-stretch max-md:mt-10">*/}
+      {/*              <div className="flex items-stretch justify-between gap-3">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  srcSet="..."*/}
+      {/*                  className="aspect-square w-9 max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*                />{" "}*/}
+      {/*                <div className="flex grow basis-[0%] flex-col items-stretch self-start">*/}
+      {/*                  <div className="whitespace-nowrap text-base font-semibold leading-6 text-zinc-900">*/}
+      {/*                    Martin Gray*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="mt-1.5 text-base font-medium leading-6 text-zinc-500">*/}
+      {/*                    Admin*/}
+      {/*                  </div>*/}
+      {/*                </div>*/}
+      {/*              </div>{" "}*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc33da148ef7db496ebedbe063addeb90b79fa28bf7c9b23f8dad21de483ca5a?"*/}
+      {/*                className="my-auto aspect-square w-6 max-w-full shrink-0 self-center overflow-hidden object-contain object-center"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="ml-5 flex w-[64%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="relative w-full grow rounded bg-white pb-12 pl-4 pr-7 pt-5 max-md:mt-10 max-md:max-w-full max-md:pr-5">*/}
+      {/*            <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*              <div className="flex w-[82%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*                <div className="relative flex flex-col items-stretch max-md:mt-10">*/}
+      {/*                  <div className="flex items-stretch gap-2.5 self-start">*/}
+      {/*                    <img*/}
+      {/*                      loading="lazy"*/}
+      {/*                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/81ae4f5b5047b5dc5a38cc586d68a46faa83ad2e96e21a9547b65fb1851dbab9?"*/}
+      {/*                      className="aspect-square w-4 max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*                    />{" "}*/}
+      {/*                    <div className="grow self-start whitespace-nowrap text-sm leading-5 text-zinc-500">*/}
+      {/*                      Type to search*/}
+      {/*                    </div>*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="mt-11 flex items-stretch justify-between gap-3.5 max-md:mt-10">*/}
+      {/*                    <div className="flex h-5 w-[25px] shrink-0 flex-col rounded-sm border border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*                    <div className="shrink grow basis-auto self-start text-base font-bold leading-7 text-zinc-900">*/}
+      {/*                      Deadline for Clustar Project*/}
+      {/*                    </div>*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="ml-9 mt-1.5 self-start whitespace-nowrap text-sm font-medium leading-5 text-zinc-500 max-md:ml-2.5">*/}
+      {/*                    Dec 21, 2021 6:00 PM*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="mt-8 flex items-stretch justify-between gap-3.5">*/}
+      {/*                    <div className="flex h-5 w-[29px] shrink-0 flex-col rounded-sm border border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*                    <div className="shrink grow basis-auto self-start text-base font-bold leading-7 text-zinc-900">*/}
+      {/*                      Fixing bugs on Live chat*/}
+      {/*                    </div>*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="ml-9 mt-1.5 self-start whitespace-nowrap text-sm font-medium leading-5 text-zinc-500 max-md:ml-2.5">*/}
+      {/*                    Dec 14, 2021 3:00 PM*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="mt-8 flex items-stretch justify-between gap-3.5">*/}
+      {/*                    <div className="flex h-5 w-5 shrink-0 flex-col rounded-sm border border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*                    <div className="flex h-[11px] w-[280px] max-w-full shrink-0 flex-col self-start rounded-lg bg-neutral-100" />*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="ml-9 flex h-[11px] w-[145px] shrink-0 flex-col self-start rounded-lg bg-neutral-100 max-md:ml-2.5" />{" "}*/}
+      {/*                  <div className="mt-8 flex items-stretch justify-between gap-3.5">*/}
+      {/*                    <div className="flex h-5 w-5 shrink-0 flex-col rounded-sm border border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*                    <div className="flex h-[11px] w-[280px] max-w-full shrink-0 flex-col self-start rounded-lg bg-neutral-100" />*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="ml-9 flex h-[11px] w-[145px] shrink-0 flex-col self-start rounded-lg bg-neutral-100 max-md:ml-2.5" />{" "}*/}
+      {/*                  <div className="mt-8 flex items-stretch justify-between gap-3.5">*/}
+      {/*                    <div className="flex h-5 w-5 shrink-0 flex-col rounded-sm border border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*                    <div className="flex h-[11px] w-[280px] max-w-full shrink-0 flex-col self-start rounded-lg bg-neutral-100" />*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="ml-9 flex h-[11px] w-[145px] shrink-0 flex-col self-start rounded-lg bg-neutral-100 max-md:ml-2.5" />{" "}*/}
+      {/*                  <div className="mt-8 flex items-stretch justify-between gap-3.5">*/}
+      {/*                    <div className="flex h-5 w-5 shrink-0 flex-col rounded-sm border border-solid border-[color:var(--gray-300,#D4D4D8)] bg-white" />{" "}*/}
+      {/*                    <div className="flex h-[11px] w-[280px] max-w-full shrink-0 flex-col self-start rounded-lg bg-neutral-100" />*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="ml-9 flex h-[11px] w-[145px] shrink-0 flex-col self-start rounded-lg bg-neutral-100 max-md:ml-2.5" />*/}
+      {/*                </div>*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="ml-5 flex w-[18%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*                <div className="relative my-auto flex flex-col items-center max-md:mt-10">*/}
+      {/*                  <img*/}
+      {/*                    loading="lazy"*/}
+      {/*                    srcSet="..."*/}
+      {/*                    className="aspect-[2.26] w-[70px] overflow-hidden object-contain object-center"*/}
+      {/*                  />{" "}*/}
+      {/*                  <div className="mt-10 flex flex-col items-start self-stretch pr-5">*/}
+      {/*                    <img*/}
+      {/*                      loading="lazy"*/}
+      {/*                      srcSet="..."*/}
+      {/*                      className="ml-5 aspect-square w-[31px] overflow-hidden object-contain object-center max-md:ml-2.5"*/}
+      {/*                    />{" "}*/}
+      {/*                    <img*/}
+      {/*                      loading="lazy"*/}
+      {/*                      srcSet="..."*/}
+      {/*                      className="mt-10 aspect-[1.65] w-[51px] self-center overflow-hidden object-contain object-center"*/}
+      {/*                    />*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <img*/}
+      {/*                    loading="lazy"*/}
+      {/*                    srcSet="..."*/}
+      {/*                    className="mt-9 aspect-[2.26] w-[70px] overflow-hidden object-contain object-center"*/}
+      {/*                  />{" "}*/}
+      {/*                  <div className="mt-9 flex flex-col items-center self-stretch pr-5">*/}
+      {/*                    <img*/}
+      {/*                      loading="lazy"*/}
+      {/*                      srcSet="..."*/}
+      {/*                      className="aspect-[1.65] w-[51px] overflow-hidden object-contain object-center"*/}
+      {/*                    />{" "}*/}
+      {/*                    <img*/}
+      {/*                      loading="lazy"*/}
+      {/*                      srcSet="..."*/}
+      {/*                      className="mt-9 aspect-[1.65] w-[51px] overflow-hidden object-contain object-center"*/}
+      {/*                    />*/}
+      {/*                  </div>*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="flex w-full flex-col items-center justify-center self-stretch px-16 py-12 max-md:max-w-full max-md:px-5">*/}
+      {/*    <div className="mb-2 mt-1 w-full max-w-[1230px] max-md:max-w-full">*/}
+      {/*      <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*        <div className="flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="mx-auto flex w-full grow flex-col items-start rounded-[30px] bg-white px-7 py-8 max-md:mt-10 max-md:px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/b4a796713f4ddf9bbb90ed0692673db9c7481b256906aa1f9077b14621feba16?"*/}
+      {/*              className="aspect-[6] w-24 max-w-full overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="mt-10 self-stretch text-lg leading-7 text-zinc-900 max-md:mt-10">*/}
+      {/*              “You made it so simple. My new site is so much faster and*/}
+      {/*              easier to work with than my old site. I just choose the*/}
+      {/*              page, make the change.”*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-9 flex items-start justify-between gap-4 self-stretch">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                srcSet="..."*/}
+      {/*                className="aspect-square w-[43px] max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*                <div className="text-base font-bold leading-7 text-zinc-900">*/}
+      {/*                  Leslie Alexander*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="mt-4 text-sm leading-6 text-zinc-600">*/}
+      {/*                  Freelance React Developer*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="mx-auto flex w-full grow flex-col items-start rounded-[30px] bg-white px-7 py-8 shadow-2xl max-md:mt-10 max-md:px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/045cc29fd0106c309510f5a20ed6e907e226ee21340daecfc6fa8eec217cd74c?"*/}
+      {/*              className="aspect-[6] w-24 max-w-full overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="mt-10 self-stretch text-lg leading-7 text-zinc-900 max-md:mt-10">*/}
+      {/*              “Simply the best. Better than all the rest. I’d recommend*/}
+      {/*              this product to beginners and advanced users.”*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-16 flex items-start justify-between gap-4 self-stretch max-md:mt-10">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                srcSet="..."*/}
+      {/*                className="aspect-square w-[43px] max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*                <div className="text-base font-bold leading-7 text-zinc-900">*/}
+      {/*                  Jacob Jones*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="mt-4 text-sm leading-6 text-zinc-600">*/}
+      {/*                  Digital Marketer*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="ml-5 flex w-[33%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*          <div className="mx-auto flex w-full grow flex-col items-start rounded-[30px] bg-white px-7 py-8 shadow-2xl max-md:mt-10 max-md:px-5">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/e4bb3548b63be661814f495060b0f9f2fab4152e09c362ffab3ee1e91e8f6fc3?"*/}
+      {/*              className="aspect-[6] w-24 max-w-full overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="mt-10 self-stretch text-lg leading-7 text-zinc-900 max-md:mt-10">*/}
+      {/*              “I cannot believe that I have got a brand new landing page*/}
+      {/*              after getting Omega. It was super easy to edit and publish.”*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-9 flex items-start justify-between gap-4 self-stretch">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                srcSet="..."*/}
+      {/*                className="aspect-square w-[43px] max-w-full shrink-0 overflow-hidden rounded-[50%] object-contain object-center"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="flex grow basis-[0%] flex-col items-stretch">*/}
+      {/*                <div className="text-base font-bold leading-7 text-zinc-900">*/}
+      {/*                  Jenny Wilson*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="mt-3 text-sm leading-6 text-zinc-600">*/}
+      {/*                  Graphic Designer*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <img*/}
+      {/*    loading="lazy"*/}
+      {/*    src="https://cdn.builder.io/api/v1/image/assets/TEMP/9711fb26a2815f79812ed106ab5ade4299d82a5d5abeced1cd2e183e9039ced9?"*/}
+      {/*    className="mt-16 aspect-[2.98] w-[140px] max-w-full items-center justify-center self-center overflow-hidden object-contain object-center max-md:mt-10"*/}
+      {/*  />{" "}*/}
+      {/*  <div className="mt-11 w-[1216px] max-w-[1144px] self-center text-center text-5xl font-medium leading-[60px] tracking-tighter text-gray-900 max-md:mt-10 max-md:max-w-full max-md:text-4xl max-md:leading-[56px]">*/}
+      {/*    We’ve been using Reboost.ai to kick start every new project and can’t*/}
+      {/*    imagine working without it*/}
+      {/*  </div>{" "}*/}
+      {/*  <img*/}
+      {/*    loading="lazy"*/}
+      {/*    srcSet="..."*/}
+      {/*    className="mt-9 aspect-square w-16 max-w-full items-center justify-center self-center overflow-hidden object-contain object-center"*/}
+      {/*  />{" "}*/}
+      {/*  <div className="mt-4 self-center whitespace-nowrap text-center text-lg font-medium leading-7 text-gray-900 max-md:max-w-full">*/}
+      {/*    Candice Wu*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-1 self-center whitespace-nowrap text-center text-base leading-6 text-gray-500 max-md:max-w-full">*/}
+      {/*    Product Manager, Sisyphus*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-20 flex w-full max-w-[1184px] flex-col items-center self-center rounded-2xl bg-zinc-900 px-16 pb-7 pt-12 max-md:mt-10 max-md:max-w-full max-md:px-5">*/}
+      {/*    <div className="flex w-[876px] max-w-full flex-col items-center">*/}
+      {/*      <div className="w-[690px] text-center text-5xl font-bold leading-10 text-white">*/}
+      {/*        Price*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mt-7 self-stretch max-md:max-w-full">*/}
+      {/*        <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*          <div className="flex w-[26%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="my-auto flex items-stretch gap-2.5 max-md:mt-10">*/}
+      {/*              <div className="flex basis-[0%] flex-col items-center">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/91cbda17544dcf5ba31d8bad6a3ba3fd5556b23ca947b261cf29f7d0eda1f7e6?"*/}
+      {/*                  className="aspect-square w-5 overflow-hidden object-contain object-center"*/}
+      {/*                />{" "}*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/91cbda17544dcf5ba31d8bad6a3ba3fd5556b23ca947b261cf29f7d0eda1f7e6?"*/}
+      {/*                  className="mt-3.5 aspect-square w-5 overflow-hidden object-contain object-center"*/}
+      {/*                />{" "}*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/91cbda17544dcf5ba31d8bad6a3ba3fd5556b23ca947b261cf29f7d0eda1f7e6?"*/}
+      {/*                  className="mt-3.5 aspect-square w-5 overflow-hidden object-contain object-center"*/}
+      {/*                />*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="my-auto text-base font-medium leading-9 text-white">*/}
+      {/*                Unlimited members*/}
+      {/*                <br />*/}
+      {/*                Admin accounts*/}
+      {/*                <br />*/}
+      {/*                Unlimited Events*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="ml-5 flex w-[21%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="my-auto flex items-stretch gap-2.5 max-md:mt-10">*/}
+      {/*              <div className="flex basis-[0%] flex-col items-center">*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/91cbda17544dcf5ba31d8bad6a3ba3fd5556b23ca947b261cf29f7d0eda1f7e6?"*/}
+      {/*                  className="aspect-square w-5 overflow-hidden object-contain object-center"*/}
+      {/*                />{" "}*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/91cbda17544dcf5ba31d8bad6a3ba3fd5556b23ca947b261cf29f7d0eda1f7e6?"*/}
+      {/*                  className="mt-3.5 aspect-square w-5 overflow-hidden object-contain object-center"*/}
+      {/*                />{" "}*/}
+      {/*                <img*/}
+      {/*                  loading="lazy"*/}
+      {/*                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/91cbda17544dcf5ba31d8bad6a3ba3fd5556b23ca947b261cf29f7d0eda1f7e6?"*/}
+      {/*                  className="mt-3.5 aspect-square w-5 overflow-hidden object-contain object-center"*/}
+      {/*                />*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mt-1 text-base font-medium leading-9 text-white">*/}
+      {/*                Custom events*/}
+      {/*                <br />*/}
+      {/*                API access*/}
+      {/*                <br />*/}
+      {/*                Bulk importer*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="ml-5 flex w-[53%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*            <div className="flex grow items-stretch justify-between gap-5 max-md:mt-10">*/}
+      {/*              <img*/}
+      {/*                loading="lazy"*/}
+      {/*                src="https://cdn.builder.io/api/v1/image/assets/TEMP/b52e67bb7b80d50cb7c848dda09b2ea6cca8027ebd8b323aaad629ed342595f8?"*/}
+      {/*                className="aspect-[0.09] w-[15px] max-w-full shrink-0 overflow-hidden object-contain object-center max-md:hidden"*/}
+      {/*              />{" "}*/}
+      {/*              <div className="mt-4 flex grow basis-[0%] flex-col items-stretch self-start">*/}
+      {/*                <div className="flex flex-col items-stretch pl-6 pr-14 max-md:px-5">*/}
+      {/*                  <div className="text-lg font-medium leading-8 text-zinc-400">*/}
+      {/*                    from*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="mt-5 flex items-stretch justify-between gap-5">*/}
+      {/*                    <div className="grow whitespace-nowrap text-5xl font-bold leading-10 text-white">*/}
+      {/*                      $3000*/}
+      {/*                    </div>{" "}*/}
+      {/*                    <div className="mt-5 grow self-start whitespace-nowrap text-lg font-medium leading-8 text-zinc-400">*/}
+      {/*                      /month*/}
+      {/*                    </div>*/}
+      {/*                  </div>*/}
+      {/*                </div>{" "}*/}
+      {/*                <div className="mt-4 flex items-stretch justify-between gap-5">*/}
+      {/*                  <div className="grow whitespace-nowrap text-3xl font-bold leading-10 text-white">*/}
+      {/*                    + success fee*/}
+      {/*                  </div>{" "}*/}
+      {/*                  <div className="mt-1.5 grow self-start whitespace-nowrap text-lg font-medium leading-8 text-zinc-400">*/}
+      {/*                    / KPI-driven*/}
+      {/*                  </div>*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-28 flex items-start justify-between gap-5 self-center px-5 max-md:mt-10 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*    <div className="aspect-square items-stretch justify-center whitespace-nowrap rounded-[50%] p-2.5 text-center text-lg font-medium leading-8 text-zinc-900">*/}
+      {/*      🔥*/}
+      {/*    </div>{" "}*/}
+      {/*    <div className="shrink grow basis-auto text-center text-5xl font-bold leading-10 text-violet-700 max-md:max-w-full">*/}
+      {/*      <span className="text-zinc-900">Fair price </span>*/}
+      {/*      <span className="text-violet-700">tied </span>*/}
+      {/*      <span className="text-violet-700">to concrete </span>*/}
+      {/*      <span className="text-violet-700">results</span>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-16 w-[617px] max-w-full self-center max-md:mt-10">*/}
+      {/*    <div className="flex gap-5 max-md:flex-col max-md:items-stretch max-md:gap-0">*/}
+      {/*      <div className="flex w-[52%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex grow items-stretch justify-between gap-4 max-md:mt-10">*/}
+      {/*          <div className="flex basis-[0%] flex-col items-center">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ceba4b1ca63cec81e3c81f5cc4008eecd1f8d0b1366b732fd7a5a12a5468d698?"*/}
+      {/*              className="aspect-square w-[42px] overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/e08788e2f2e060140d5b9ca6818ab2f50f4fd7ba6b91eb6483b79d74de2727f7?"*/}
+      {/*              className="mt-11 aspect-square w-[42px] overflow-hidden object-contain object-center max-md:mt-10"*/}
+      {/*            />*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="flex grow basis-[0%] flex-col items-stretch px-5">*/}
+      {/*            <div className="whitespace-nowrap text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*              Cloud Events Tracker*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-4 text-sm leading-6 text-zinc-600">*/}
+      {/*              Unlimited for all events*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-12 text-lg font-bold leading-6 text-zinc-900 max-md:mt-10">*/}
+      {/*              Data API Access*/}
+      {/*            </div>{" "}*/}
+      {/*            <div className="mt-4 whitespace-nowrap text-sm leading-6 text-zinc-600">*/}
+      {/*              Get whatever date you need*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="ml-5 flex w-[48%] flex-col items-stretch max-md:ml-0 max-md:w-full">*/}
+      {/*        <div className="flex grow flex-col items-stretch max-md:mt-10">*/}
+      {/*          <div className="flex items-start justify-between gap-4">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/b203de6039bb6dca40d7152aea90b948d7b9fe6f6947b1747dfd1442f1292516?"*/}
+      {/*              className="aspect-square w-[42px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="flex grow basis-[0%] flex-col items-stretch self-stretch px-5">*/}
+      {/*              <div className="whitespace-nowrap text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*                Unlimited Accounts*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mt-4 whitespace-nowrap text-sm leading-6 text-zinc-600">*/}
+      {/*                No charge for extra accounts*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="mt-11 flex items-start justify-between gap-4 max-md:mt-10">*/}
+      {/*            <img*/}
+      {/*              loading="lazy"*/}
+      {/*              src="https://cdn.builder.io/api/v1/image/assets/TEMP/54ca23f793fec93860053682ac61b1ccb68f558e974969c78edc99f41a66af7b?"*/}
+      {/*              className="aspect-square w-[42px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*            />{" "}*/}
+      {/*            <div className="flex grow basis-[0%] flex-col items-stretch self-stretch px-5">*/}
+      {/*              <div className="text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*                Custom Events*/}
+      {/*              </div>{" "}*/}
+      {/*              <div className="mt-4 whitespace-nowrap text-sm leading-6 text-zinc-600">*/}
+      {/*                Add any events you want*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="mt-11 flex w-[619px] max-w-full items-start justify-between gap-5 self-center max-md:mt-10 max-md:flex-wrap">*/}
+      {/*    <div className="flex items-start gap-4">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/cc3ca96bc9857a4e5d445d7c3833e4fb3af8b6a99ff65b90a4cb037f131b61c6?"*/}
+      {/*        className="aspect-square w-[42px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />{" "}*/}
+      {/*      <div className="flex grow basis-[0%] flex-col items-stretch self-stretch px-5">*/}
+      {/*        <div className="whitespace-nowrap text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*          Personal Account Manager*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="mt-3 text-sm leading-6 text-zinc-600">*/}
+      {/*          We're always here to help.*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className="flex items-start justify-between gap-4 self-stretch">*/}
+      {/*      <img*/}
+      {/*        loading="lazy"*/}
+      {/*        src="https://cdn.builder.io/api/v1/image/assets/TEMP/cebac2aa7dff657e7022c1a51002577d711bb63c5847edc18c4dcff54134e5c3?"*/}
+      {/*        className="aspect-square w-[42px] max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*      />*/}
+      {/*      <div className="flex grow basis-[0%] flex-col items-stretch self-stretch px-5">*/}
+      {/*        <div className="text-lg font-bold leading-6 text-zinc-900">*/}
+      {/*          All integrations*/}
+      {/*        </div>*/}
+      {/*        <div className="mt-3 text-sm leading-6 text-zinc-600">*/}
+      {/*          Easily share your data on your  BI-system and other*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="mt-14 self-center whitespace-nowrap text-center text-base font-medium leading-6 text-zinc-600 max-md:mt-10">*/}
+      {/*    All our features are available{" "}*/}
+      {/*  </div>*/}
+      {/*  <div className="relative mt-32 flex min-h-[995px] w-full flex-col items-center justify-center self-stretch overflow-hidden px-16 py-12 max-md:mt-10 max-md:max-w-full max-md:px-5">*/}
+      {/*    <img*/}
+      {/*      loading="lazy"*/}
+      {/*      srcSet="..."*/}
+      {/*      className="absolute inset-0 h-full w-full object-cover object-center"*/}
+      {/*    />*/}
+      {/*    <div className="relative mb-96 mt-16 flex w-[789px] max-w-full flex-col items-stretch max-md:my-10">*/}
+      {/*      <div className="text-center text-5xl font-bold leading-10 text-white max-md:max-w-full">*/}
+      {/*        Drop us a line or two, we're open to any questions and*/}
+      {/*        cooperation!*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mt-9 max-w-[521px] self-center text-center text-base leading-7 text-zinc-100 max-md:max-w-full">*/}
+      {/*        We are happy to answer all questions and demonstrate our product*/}
+      {/*        and its capabilities*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="relative mt-10 flex aspect-[3.4444444444444446] w-[248px] max-w-full flex-col items-stretch justify-center self-center overflow-hidden px-9 py-2.5 max-md:px-5">*/}
+      {/*        <img*/}
+      {/*          loading="lazy"*/}
+      {/*          src="https://cdn.builder.io/api/v1/image/assets/TEMP/2321b237a3267eeb809ffc09aa78e3504f27b553e8edc38832deaa2eb00e64fa?"*/}
+      {/*          className="absolute inset-0 h-full w-full object-cover object-center"*/}
+      {/*        />{" "}*/}
+      {/*        <div className="relative items-stretch justify-center whitespace-nowrap rounded-xl border border-solid border-[color:var(--base-white,#FFF)] bg-[linear-gradient(0deg,#18181B_0%,#18181B_100%),#6922EC] px-6 py-4 text-right text-lg font-bold leading-6 text-white max-md:px-5">*/}
+      {/*          Request Demo*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>{" "}*/}
+      {/*  <div className="flex w-full flex-col items-center justify-center self-stretch bg-zinc-900 px-16 py-12 max-md:max-w-full max-md:px-5">*/}
+      {/*    <div className="mb-9 mt-16 flex w-full max-w-[1296px] flex-col max-md:mt-10 max-md:max-w-full">*/}
+      {/*      <div className="flex w-full items-stretch justify-between gap-5 self-stretch pr-5 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*        <div className="shrink grow basis-auto text-5xl font-bold leading-10 text-white max-md:max-w-full">*/}
+      {/*          Maximizing profits through AI marketing*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="mt-2 flex items-start gap-5 self-start">*/}
+      {/*          <img*/}
+      {/*            loading="lazy"*/}
+      {/*            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d1de7494f0f30fcc9fe8e61d813d9da29a1ec28716eb804ae921e7415aee88aa?"*/}
+      {/*            className="aspect-square w-6 max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*          />{" "}*/}
+      {/*          <div className="shrink grow basis-auto text-xl leading-9 text-white">*/}
+      {/*            8502 Preston Rd. Inglewood, Maine 98380, USA*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mr-24 mt-3.5 flex items-stretch gap-5 self-end max-md:mr-2.5">*/}
+      {/*        <img*/}
+      {/*          loading="lazy"*/}
+      {/*          src="https://cdn.builder.io/api/v1/image/assets/TEMP/1869380eb02bd2a18a16818679d5bf29bb2671fd69ded3363f385dc4f95e7045?"*/}
+      {/*          className="aspect-square w-6 max-w-full shrink-0 overflow-hidden object-contain object-center"*/}
+      {/*        />{" "}*/}
+      {/*        <div className="shrink grow basis-auto self-start text-xl leading-9 text-white">*/}
+      {/*          support@rareblocks.xyz*/}
+      {/*        </div>*/}
+      {/*      </div>{" "}*/}
+      {/*      <div className="mt-24 h-px shrink-0 self-stretch bg-zinc-600 max-md:mt-10 max-md:max-w-full" />{" "}*/}
+      {/*      <div className="mt-14 flex w-full items-start justify-between gap-5 self-stretch max-md:mt-10 max-md:max-w-full max-md:flex-wrap">*/}
+      {/*        <div className="mt-3 flex items-start justify-between gap-5 max-md:max-w-full max-md:flex-wrap max-md:justify-center">*/}
+      {/*          <div className="self-start text-lg font-medium leading-8 text-white">*/}
+      {/*            About*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="self-start text-lg font-medium leading-8 text-white">*/}
+      {/*            Features*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="self-start text-lg font-medium leading-8 text-white">*/}
+      {/*            Works*/}
+      {/*          </div>{" "}*/}
+      {/*          <div className="self-stretch text-lg font-medium leading-8 text-white">*/}
+      {/*            Support*/}
+      {/*          </div>*/}
+      {/*        </div>{" "}*/}
+      {/*        <div className="shrink grow basis-auto text-right text-lg leading-7 text-white">*/}
+      {/*          © Copyright 2021, All Rights Reserved*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+    </div>
+  );
 }
 
-export default App
+export default App;

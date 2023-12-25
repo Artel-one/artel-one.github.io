@@ -1,1 +1,1 @@
-export { default } from './HowWorks'
+export { default } from "./HowWorks";
