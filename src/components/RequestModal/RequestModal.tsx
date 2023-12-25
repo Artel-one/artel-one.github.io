@@ -90,7 +90,12 @@ const RequestModal = ({
                             <button
                               type="button"
                               className="bg-primary mt-6 flex w-full justify-center rounded-md px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-opacity-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                              onClick={onClose}
+                              onClick={() => {
+                                onClose();
+                                setTimeout(() => {
+                                  setIsSuccessSent(false);
+                                }, 1000);
+                              }}
                             >
                               Close
                             </button>
