@@ -8,7 +8,7 @@ const CookieConsent = ({
   onDisagree: () => void;
 }) => {
   return (
-    <div className="fixed inset-x-5 bottom-10 mx-auto flex max-w-screen-lg flex-wrap items-center justify-center gap-4 rounded-lg bg-white p-5 text-center drop-shadow-2xl md:flex-nowrap md:justify-between md:text-left">
+    <div className="fixed inset-x-5 bottom-10 z-[1] mx-auto flex max-w-screen-lg flex-wrap items-center justify-center gap-4 rounded-lg bg-white p-5 text-center drop-shadow-2xl md:flex-nowrap md:justify-between md:text-left">
       <div className="w-full">
         By clicking “Allow Cookies” you agree to our website′s cookie use as
         described in our{" "}
