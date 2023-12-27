@@ -156,7 +156,7 @@ const _Feedback = () => {
                     <div className="mt-8 flex items-center">
                       <img
                         className="h-11 w-11 flex-shrink-0 rounded-full object-cover"
-                        src={avatar3}
+                        src={avatar2}
                         alt=""
                       />
                       <div className="ml-4">
@@ -228,7 +228,7 @@ const _Feedback = () => {
                     <div className="mt-8 flex items-center">
                       <img
                         className="h-11 w-11 flex-shrink-0 rounded-full object-cover"
-                        src={avatar2}
+                        src={avatar3}
                         alt=""
                       />
                       <div className="ml-4">
@@ -254,8 +254,8 @@ const _Feedback = () => {
           className="mx-auto mt-16 hidden aspect-[2.98] w-[140px] max-w-full items-center justify-center self-center overflow-hidden object-contain object-center max-md:mt-10"
         />
         <h2 className="mt-16 text-center text-3xl font-medium text-gray-900 max-md:mt-10 sm:text-4xl xl:text-5xl">
-          We use Reboost.ai ML solutions for all of our digital marketing
-          campaigns and are more than happy with the results we have achieved.
+          We use Reboost.ai for all of our digital marketing campaigns and are
+          more than happy with the results
         </h2>
         <img
           loading="lazy"
