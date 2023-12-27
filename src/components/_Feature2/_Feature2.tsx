@@ -10,7 +10,7 @@ const _Feature2 = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
   return (
-    <section className="pt-12 sm:pt-16 lg:pt-20 xl:pt-24">
+    <section className="pt-12 sm:pt-16 lg:pt-20 xl:pt-24" id="solutions">
       <div className="container mx-auto max-w-7xl px-5">
         <Badge>Marketing with full AI power</Badge>
 
@@ -32,7 +32,7 @@ const _Feature2 = () => {
                 <a
                   href="#"
                   title=""
-                  className={`hover:text-primary hover:border-primary border-b text-base font-semibold uppercase leading-5 transition-all duration-200 ${
+                  className={`border-b text-base font-semibold uppercase leading-5 transition-all duration-200 hover:border-primary hover:text-primary ${
                     index === selectedTabIndex
                       ? "border-primary text-primary"
                       : "border-transparent text-gray-400"

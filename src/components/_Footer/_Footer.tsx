@@ -3,10 +3,10 @@ import logoWhiteImage from "./images/logo_white.svg";
 
 const _Footer = () => {
   return (
-    <footer className="bg-secondary border-t border-white">
+    <footer className="border-t border-white bg-secondary">
       <div className="container mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0"></div>
+          <div className="mb-6 hidden sm:block md:mb-0"></div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
             <div>
               {/*  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>*/}
@@ -31,9 +31,6 @@ const _Footer = () => {
               {/*  </ul>*/}
             </div>
             <div>
-              <h2 className="mb-6 text-lg font-semibold uppercase text-white">
-                Legal
-              </h2>
               <ul className="font-medium text-white">
                 <li className="mb-4">
                   <a

@@ -3,7 +3,10 @@ import DATA from "./data";
 
 const _Feature3 = () => {
   return (
-    <section className="px-4 py-6 sm:px-6 sm:py-16 lg:px-8 lg:py-10">
+    <section
+      className="px-4 py-6 sm:px-6 sm:py-16 lg:px-8 lg:py-10"
+      id="features"
+    >
       <div className="container mx-auto max-w-7xl px-5">
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-pj text-lg font-medium text-gray-purpure">

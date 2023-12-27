@@ -3,7 +3,10 @@ import dashboard from "./images/dashboard.png";
 
 const _Demo = ({ onRequestDemo }: { onRequestDemo: () => void }) => {
   return (
-    <section className="bg-secondary mt-10 px-4 max-md:max-w-full max-md:px-5 sm:px-6 lg:px-8">
+    <section
+      className="mt-10 bg-secondary px-4 max-md:max-w-full max-md:px-5 sm:px-6 lg:px-8"
+      id="contact"
+    >
       <div className="container relative mx-auto flex max-w-7xl px-16 py-10 max-md:mt-10 max-md:max-w-full max-md:px-5">
         <div className="mx-auto mt-16 max-w-[789px] max-md:my-10">
           <div className="text-center text-3xl font-bold text-white max-md:max-w-full lg:text-5xl">
@@ -17,7 +20,7 @@ const _Demo = ({ onRequestDemo }: { onRequestDemo: () => void }) => {
             href="#"
             title=""
             onClick={onRequestDemo}
-            className="hover:text-secondary mx-auto mt-11 box-border block w-[180px] rounded-xl border border-white p-4 text-center font-pj text-lg font-bold text-white transition-all duration-200 hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+            className="mx-auto mt-11 box-border block w-[180px] rounded-xl border border-white p-4 text-center font-pj text-lg font-bold text-white transition-all duration-200 hover:bg-white hover:text-secondary focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
             role="button"
           >
             Request demo

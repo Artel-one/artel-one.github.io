@@ -5,7 +5,7 @@ import DATA from "./data";
 const _Results = () => {
   return (
     <section className="px-4 max-md:max-w-full max-md:px-5 sm:px-6 lg:px-8">
-      <div className="bg-secondary container mx-auto flex max-w-[1413px] flex-col items-stretch rounded-[30px] py-14">
+      <div className="container mx-auto flex max-w-[1413px] flex-col items-stretch rounded-[30px] bg-secondary py-14">
         <h2 className="text-center text-4xl font-bold leading-10 text-white xl:text-5xl">
           The results you can achieve
         </h2>
@@ -22,7 +22,7 @@ const _Results = () => {
                 key={index}
               >
                 <div className="flex grow flex-col items-stretch max-md:mt-2">
-                  <div className="text-center text-5xl font-semibold tracking-tighter text-white max-md:text-4xl md:text-3xl lg:text-6xl">
+                  <div className="text-center text-5xl font-semibold tracking-tighter text-white max-md:text-4xl md:text-3xl lg:text-5xl">
                     {title}
                   </div>
                   <div className="mt-7 whitespace-nowrap text-center text-base font-medium text-white">

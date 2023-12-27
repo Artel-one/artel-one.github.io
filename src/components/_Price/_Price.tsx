@@ -28,7 +28,10 @@ const DATA = [
 
 const _Price = () => {
   return (
-    <section className="mx-auto flex max-w-7xl flex-col items-center justify-center self-center rounded-[30px] px-4 pb-12 max-md:mt-10 max-md:max-w-full max-md:px-5 sm:px-6 md:pt-10 lg:px-8">
+    <section
+      id="price"
+      className="mx-auto flex max-w-7xl flex-col items-center justify-center self-center rounded-[30px] px-4 pb-12 max-md:mt-10 max-md:max-w-full max-md:px-5 sm:px-6 md:pt-10 lg:px-8"
+    >
       <div className="flex w-full max-w-[1184px] flex-col items-center self-center rounded-2xl bg-zinc-900 px-16 pb-7 pt-12 max-md:mt-10 max-md:max-w-full max-md:px-5">
         <div className="flex w-full max-w-[876px] flex-col items-center">
           <div className="text-center text-5xl font-bold text-white">Price</div>

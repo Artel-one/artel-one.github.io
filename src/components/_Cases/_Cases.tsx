@@ -31,10 +31,13 @@ const DATA = [
 
 const _Cases = () => {
   return (
-    <section className="px-4 pb-20 max-md:max-w-full max-md:px-5 sm:px-6 lg:px-8">
-      <div className="bg-secondary container mx-auto flex max-w-[1413px] flex-col items-stretch rounded-[30px] px-6 py-14 xl:px-[100px] 2xl:px-[140px]">
+    <section
+      className="px-4 pb-20 max-md:max-w-full max-md:px-5 sm:px-6 lg:px-8"
+      id="cases"
+    >
+      <div className="container mx-auto flex max-w-[1413px] flex-col items-stretch rounded-[30px] bg-secondary px-6 py-14 xl:px-[100px] 2xl:px-[140px]">
         <h2 className="text-center text-4xl font-bold leading-10 text-white xl:text-5xl">
-          Our cases
+          Our Cases
         </h2>
         <img
           loading="lazy"
