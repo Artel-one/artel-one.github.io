@@ -251,11 +251,11 @@ const _Feedback = () => {
         <img
           loading="lazy"
           src={logo}
-          className="mx-auto mt-16 aspect-[2.98] w-[140px] max-w-full items-center justify-center self-center overflow-hidden object-contain object-center max-md:mt-10"
+          className="mx-auto mt-16 hidden aspect-[2.98] w-[140px] max-w-full items-center justify-center self-center overflow-hidden object-contain object-center max-md:mt-10"
         />
-        <h2 className="mt-7 text-center text-3xl font-medium text-gray-900 sm:text-4xl xl:text-5xl">
-          We’ve been using Reboost.ai to kick start every new project and can’t
-          imagine working without it
+        <h2 className="mt-16 text-center text-3xl font-medium text-gray-900 max-md:mt-10 sm:text-4xl xl:text-5xl">
+          We use Reboost.ai ML solutions for all of our digital marketing
+          campaigns and are more than happy with the results we have achieved.
         </h2>
         <img
           loading="lazy"
@@ -263,10 +263,10 @@ const _Feedback = () => {
           className="mx-auto mt-9 aspect-square w-16 max-w-full items-center justify-center self-center overflow-hidden object-contain object-center"
         />
         <div className="mt-4 self-center whitespace-nowrap text-center text-lg font-medium leading-7 text-gray-900 max-md:max-w-full">
-          Candice Wu
+          Elizabeth Nightingale
         </div>
         <div className="mx-auto mt-1 self-center whitespace-nowrap text-center text-base leading-6 text-gray-500 max-md:max-w-full">
-          Product Manager, Sisyphus
+          Chief Commercial Officer
         </div>
       </div>
     </section>
