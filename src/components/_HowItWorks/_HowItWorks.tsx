@@ -1,4 +1,4 @@
-import scheme from "./images/scheme.png";
+import scheme from "./images/scheme.webp";
 
 const _HowItWorks = () => {
   return (
