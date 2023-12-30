@@ -27,9 +27,9 @@ const _Advantages = () => {
                 <img
                   loading="lazy"
                   src={image}
-                  className="size-12 max-w-full overflow-hidden object-contain object-center"
+                  className="-ml-[6px] size-12 max-w-full overflow-hidden object-contain object-center"
                 />
-                <div className="mt-7 self-stretch text-2xl font-bold leading-9 text-gray-900">
+                <div className="mt-5 self-stretch text-2xl font-bold leading-9 text-gray-900">
                   {title}
                 </div>
                 <div className="mt-8 self-stretch text-base leading-7 text-gray-600">

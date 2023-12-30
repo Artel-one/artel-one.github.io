@@ -1,6 +1,9 @@
 import rocketIcon from "./images/rocket.svg";
 import translatorIcon from "./images/translator.svg";
 import diagramIcon from "./images/diagram.svg";
+import manIcon from "./images/man.svg";
+import brainIcon from "./images/brain.svg";
+import pieIcon from "./images/pie.svg";
 import * as React from "react";
 
 export default [
@@ -33,7 +36,7 @@ export default [
   ],
   [
     [
-      rocketIcon,
+      manIcon,
       "Data personalisation",
       <>
         Offer personalised pricing and suggestions{" "}
@@ -44,7 +47,7 @@ export default [
       </>,
     ],
     [
-      translatorIcon,
+      brainIcon,
       "ML experiments",
       <>
         Flexible system of iterative A/B tests{" "}
@@ -53,7 +56,7 @@ export default [
       </>,
     ],
     [
-      diagramIcon,
+      pieIcon,
       "End-to-end analytics",
       <>Comprehensive customer data from all sites and channels in one place</>,
     ],
