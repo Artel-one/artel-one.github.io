@@ -67,7 +67,7 @@ const _Footer = () => {
             <img className="h-4 w-auto" src={logoWhiteImage} alt="" />
           </a>
           <span className="text-base text-white sm:text-center">
-            © 2023 Reboost.ai. All rights reserved.
+            © 2024 Reboost.ai. All rights reserved.
           </span>
           {/*<div className="flex mt-4 sm:justify-center sm:mt-0">*/}
           {/*  <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">*/}
